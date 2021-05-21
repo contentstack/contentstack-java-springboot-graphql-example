@@ -1,0 +1,11 @@
+query MyQuery {
+  all_product(limit: 10) {
+    items {
+      description
+      title
+      url
+      size
+      price_in_usd
+    }
+  }
+}
