@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The type Gql test application.
+ */
 @SpringBootApplication
 @RestController
 @Slf4j
@@ -18,11 +21,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "api")
 public class GQLTestApplication {
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         SpringApplication.run(GQLTestApplication.class, args);
     }
 
 
+    /**
+     * Gets products.
+     *
+     * @return the products
+     * @throws JsonProcessingException the json processing exception
+     */
     @GetMapping(value = "/product")
     public JsonNode getProducts() throws JsonProcessingException {
         GQL gqlInstance = GQL.Builder.newInstance()
@@ -36,6 +50,12 @@ public class GQLTestApplication {
     }
 
 
+    /**
+     * Gets about.
+     *
+     * @return the about
+     * @throws JsonProcessingException the json processing exception
+     */
     @GetMapping(value = "/about")
     public JsonNode getAbout() throws JsonProcessingException {
         GQL gqlInstance = GQL.Builder.newInstance()
@@ -58,6 +78,12 @@ public class GQLTestApplication {
     }
 
 
+    /**
+     * Gets banner.
+     *
+     * @return the banner
+     * @throws JsonProcessingException the json processing exception
+     */
     @GetMapping(value = "/banner")
     public JsonNode getBanner() throws JsonProcessingException {
         GQL gqlInstance = GQL.Builder.newInstance()
@@ -86,6 +112,12 @@ public class GQLTestApplication {
     }
 
 
+    /**
+     * Gets contact.
+     *
+     * @return the contact
+     * @throws JsonProcessingException the json processing exception
+     */
     @GetMapping(value = "/contact")
     public JsonNode getContact() throws JsonProcessingException {
         GQL gqlInstance = GQL.Builder.newInstance()

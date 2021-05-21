@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Gql.
+ */
 final class GQL {
 
     private final int id;
@@ -21,6 +24,11 @@ final class GQL {
     private final JSONObject queryJson;
     private final HttpHeaders headers;
 
+    /**
+     * Instantiates a new Gql.
+     *
+     * @param builder the builder
+     */
     public GQL(Builder builder) {
         this.id = builder.id;
         this.tag = builder.tag;
@@ -42,6 +50,12 @@ final class GQL {
                 '}';
     }
 
+    /**
+     * Fetch json node.
+     *
+     * @return the json node
+     * @throws JsonProcessingException the json processing exception
+     */
     public JsonNode fetch() throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<JSONObject> entity = new HttpEntity<JSONObject>(queryJson, this.headers);
@@ -58,6 +72,12 @@ final class GQL {
         }
     }
 
+    /**
+     * Model it.
+     *
+     * @param <T>            the type parameter
+     * @param responseString the response string
+     */
     public <T> void modelIt(String responseString) {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -72,6 +92,9 @@ final class GQL {
         }
     }
 
+    /**
+     * The type Builder.
+     */
     public static class Builder {
 
         private int id;
@@ -84,20 +107,43 @@ final class GQL {
         private Builder() {
         }
 
+        /**
+         * New instance builder.
+         *
+         * @return the builder
+         */
         public static Builder newInstance() {
             return new Builder();
         }
 
+        /**
+         * Sets id.
+         *
+         * @param id the id
+         * @return the id
+         */
         public Builder setId(int id) {
             this.id = id;
             return this;
         }
 
+        /**
+         * Sets tag.
+         *
+         * @param tag the tag
+         * @return the tag
+         */
         public Builder setTag(String tag) {
             this.tag = tag;
             return this;
         }
 
+        /**
+         * Sets node.
+         *
+         * @param node the node
+         * @return the node
+         */
         public Builder setNode(String node) {
             if (node != null && !node.isEmpty()) {
                 this.nodeSplitter = node.split(":");
@@ -109,11 +155,23 @@ final class GQL {
             return this;
         }
 
+        /**
+         * Sets url.
+         *
+         * @param url the url
+         * @return the url
+         */
         public Builder setUrl(String url) {
             this.url = url;
             return this;
         }
 
+        /**
+         * Sets query string.
+         *
+         * @param queryString the query string
+         * @return the query string
+         */
         public Builder setQueryString(String queryString) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.appendField("query", queryString);
@@ -121,6 +179,12 @@ final class GQL {
             return this;
         }
 
+        /**
+         * Sets header.
+         *
+         * @param access_token the access token
+         * @return the header
+         */
         public Builder setHeader(String access_token) {
             final HttpHeaders headers = new HttpHeaders();
             ArrayList<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
@@ -131,6 +195,11 @@ final class GQL {
             return this;
         }
 
+        /**
+         * Build gql.
+         *
+         * @return the gql
+         */
         public GQL build() {
             // Do some validation part if required values are not provided
             // if (url.isEmpty()){
