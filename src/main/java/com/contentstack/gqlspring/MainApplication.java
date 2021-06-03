@@ -70,12 +70,10 @@ public class MainApplication {
                 .build();
         JsonNode response = gqlInstance.fetch().get("data").get("all_footer").get("items");
         System.out.println(response);
-//        ObjectMapper mapper = new ObjectMapper();
-//        List<FooterModel> footerModels = mapper.readValue(response.toString(),
-//                new TypeReference<List<FooterModel>>() {
-//                });
-//        System.out.println(footerModels);
-        model.addAttribute("index", response);
+        ObjectMapper mapper = new ObjectMapper();
+        List<FooterModel> dataList = mapper.readValue(response.toString(), new TypeReference<List<FooterModel>>(){});
+        System.out.println(dataList);
+        model.addAttribute("index", dataList);
         return "index";
     }
 
