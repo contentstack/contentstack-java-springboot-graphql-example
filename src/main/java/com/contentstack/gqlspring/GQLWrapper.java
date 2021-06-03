@@ -1,7 +1,6 @@
 package com.contentstack.gqlspring;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
@@ -10,12 +9,11 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * The type Gql.
  */
-final class GQL {
+final class GQLWrapper {
 
     private final int id;
     private final String tag;
@@ -29,7 +27,7 @@ final class GQL {
      *
      * @param builder the builder
      */
-    public GQL(Builder builder) {
+    public GQLWrapper(Builder builder) {
         this.id = builder.id;
         this.tag = builder.tag;
         this.nodeSplitter = builder.nodeSplitter;
@@ -58,7 +56,7 @@ final class GQL {
      */
     public JsonNode fetch() throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<JSONObject> entity = new HttpEntity<JSONObject>(queryJson, this.headers);
+        HttpEntity<JSONObject> entity = new HttpEntity<>(queryJson, this.headers);
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
         HttpStatus statusCode = responseEntity.getStatusCode();
         if (statusCode == HttpStatus.OK) {
@@ -72,25 +70,6 @@ final class GQL {
         }
     }
 
-    /**
-     * Model it.
-     *
-     * @param <T>            the type parameter
-     * @param responseString the response string
-     */
-    public <T> void modelIt(String responseString) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode actualObj = mapper.readTree(responseString);
-            JsonNode items = actualObj.get("data").get("all_product").get("items");
-            List<Product> listProduct = mapper.readValue(items.toString(),
-                    new TypeReference<List<Product>>() {
-                    });
-            System.out.println("listProduct => " + listProduct);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * The type Builder.
@@ -102,7 +81,7 @@ final class GQL {
         private String url;
         private JSONObject queryJson = new JSONObject();
         private HttpHeaders headers = new HttpHeaders();
-        private String[] nodeSplitter = {};
+        private final String[] nodeSplitter = {};
 
         private Builder() {
         }
@@ -138,22 +117,6 @@ final class GQL {
             return this;
         }
 
-        /**
-         * Sets node.
-         *
-         * @param node the node
-         * @return the node
-         */
-        public Builder setNode(String node) {
-            if (node != null && !node.isEmpty()) {
-                this.nodeSplitter = node.split(":");
-            }
-            List<String> targetList = Arrays.asList(this.nodeSplitter);
-            for (String nodeIndex : targetList) {
-                System.out.println("nodes: => " + nodeIndex);
-            }
-            return this;
-        }
 
         /**
          * Sets url.
@@ -187,7 +150,7 @@ final class GQL {
          */
         public Builder setHeader(String access_token) {
             final HttpHeaders headers = new HttpHeaders();
-            ArrayList<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+            ArrayList<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             headers.setAccept(acceptableMediaTypes);
             headers.add("access_token", access_token);
@@ -200,12 +163,8 @@ final class GQL {
          *
          * @return the gql
          */
-        public GQL build() {
-            // Do some validation part if required values are not provided
-            // if (url.isEmpty()){
-            // throw new Exception("Can not work without url");
-            // }
-            return new GQL(this);
+        public GQLWrapper build() {
+            return new GQLWrapper(this);
         }
 
     }
