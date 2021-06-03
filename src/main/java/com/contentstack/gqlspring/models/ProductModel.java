@@ -1,4 +1,4 @@
-package com.contentstack.gqlspring;
+package com.contentstack.gqlspring.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.Data;
  * The type Product.
  */
 @Data
-public class Product {
+public class ProductModel {
 
     /**
      * The Title.
