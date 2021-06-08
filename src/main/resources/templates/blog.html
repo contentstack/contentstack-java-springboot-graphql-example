@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
 <head>
-    <title>Contact Us</title>
+    <title>Blogs</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="News Blog">
-    <meta name="description" content="News Blog">
-    <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon" />
+    <meta name="keywords" content="contentstack">
+    <meta name="description" content="contentstack">
+    <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon"/>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -20,7 +21,7 @@
             <div class="row">
                 <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                     <div class="title">
-                        <h1>Contact Us</h1>
+                        <h1>Blogs</h1>
                     </div>
                 </div>
             </div>
@@ -33,10 +34,11 @@
                     <div class="page-wrapper">
                         <div class="blog-list clearfix">
                             <div class="blog-box row">
-                                <!-- <div class="col-md-12"> -->
-                                    <div class="contact-image col-md-6"><img class="img-fluid" src="./images/contentstack-us-office.jpg" alt="about us"></div>
-                                    <div class="contact-content col-md-6" th:utext="${contact}"></div>
-                                <!-- </div> -->
+                                <div class="col-md-12">
+                                    <div class="about-image"><img class="img-fluid" src="./images/about-us.jpg"
+                                                                  alt="about us"></div>
+                                    <div class="about-content" th:utext="${blog}"></div>
+                                </div>
                             </div>
                         </div><!-- end blog-list -->
                     </div><!-- end page-wrapper -->
@@ -56,7 +58,7 @@
     <div class="dmtop">Scroll to Top</div>
 </div><!-- end wrapper -->
 
-    <!-- Core JavaScript -->
+
 <script src="js/jquery.min.js"></script>
 <script src="js/script.js"></script>
 

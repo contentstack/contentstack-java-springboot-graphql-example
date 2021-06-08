@@ -1,30 +1,30 @@
 package com.contentstack.gqlspring;
 
-import com.contentstack.gqlspring.models.FooterModel;
+import com.contentstack.gqlspring.models.BlogModel;
+import com.contentstack.gqlspring.models.IndexModel;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cdimascio.dotenv.Dotenv;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * The type Gql test application.
+ * The type Data fetcher.
  */
-@SpringBootApplication
-@RestController
-//@Slf4j
-//@Validated
-public class MainApplication {
+public class Fetcher {
+
 
     private static String BASE_URL;
     private static String DeliverToken;
+
+    /**
+     * Instantiates a new Data fetcher.
+     */
+    public Fetcher() {
+        loadEnvVar();
+    }
 
 
     // load credentials from from .env
@@ -37,44 +37,23 @@ public class MainApplication {
     }
 
     /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
-    public static void main(String[] args) {
-        loadEnvVar();
-        SpringApplication.run(MainApplication.class, args);
-    }
-
-
-    /**
      * loadIndexPage will load default html page
      * as its not specifies any name in Get Mapping
      *
      * @return the loadIndexPage
      * @throws JsonProcessingException the json processing exception
      */
-    @GetMapping("/")
-    public String loadIndexPage(Model model) throws JsonProcessingException {
-        GQLWrapper gqlInstance = GQLWrapper.Builder.newInstance()
+    public List<IndexModel> loadIndexPage() throws JsonProcessingException {
+        GraphQlWrapper gqlInstance = GraphQlWrapper.Builder.newInstance()
                 .setTag("all_footer")
                 .setUrl(BASE_URL)
-                .setQueryString("{\n" +
-                        "  all_footer {\n" +
-                        "    items {\n" +
-                        "      title\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}")
+                .setQueryString("query{ all_footer { items { logoConnection { edges { node { url filename } } } navigation { link { href title } } title social { social_share { link { title href } iconConnection { edges { node { url filename } } } } } } } }")
                 .setHeader(DeliverToken)
                 .build();
-        JsonNode response = gqlInstance.fetch().get("data").get("all_footer").get("items");
-        System.out.println(response);
+        JsonNode response = gqlInstance.fetch().get("data").get("all_footer").get("items").get(0);
         ObjectMapper mapper = new ObjectMapper();
-        List<FooterModel> dataList = mapper.readValue(response.toString(), new TypeReference<List<FooterModel>>(){});
-        System.out.println(dataList);
-        model.addAttribute("index", dataList);
-        return "index";
+        List<IndexModel> indexModels = Arrays.asList(mapper.readValue(response.toString(), IndexModel[].class));
+        return indexModels;
     }
 
 
@@ -84,9 +63,8 @@ public class MainApplication {
      * @return the products
      * @throws JsonProcessingException the json processing exception
      */
-    @GetMapping(value = "/all_blog_post")
-    public String getProducts(Model model) throws JsonProcessingException {
-        GQLWrapper gqlInstance = GQLWrapper.Builder.newInstance()
+    public List<BlogModel> getBlogs() throws JsonProcessingException {
+        GraphQlWrapper gqlInstance = GraphQlWrapper.Builder.newInstance()
                 .setUrl(BASE_URL)
                 .setQueryString("query{\n" +
                         "  all_blog_post {\n" +
@@ -101,8 +79,8 @@ public class MainApplication {
                 .setHeader(DeliverToken)
                 .build();
         JsonNode response = gqlInstance.fetch().get("data").get("all_blog_post").get("items");
-        model.addAttribute("blog", response);
-        return "blog";
+        ObjectMapper mapper = new ObjectMapper();
+        return Arrays.asList(mapper.readValue(response.toString(), BlogModel[].class));
     }
 
 
@@ -112,9 +90,8 @@ public class MainApplication {
      * @return the about
      * @throws JsonProcessingException the json processing exception
      */
-    @GetMapping(value = "/all_footer")
-    public JsonNode getAbout(Model model) throws JsonProcessingException {
-        GQLWrapper gqlInstance = GQLWrapper.Builder.newInstance()
+    public String getFooter() throws JsonProcessingException {
+        GraphQlWrapper gqlInstance = GraphQlWrapper.Builder.newInstance()
                 .setTag("all_footer")
                 .setUrl(BASE_URL)
                 .setQueryString("{\n" +
@@ -126,15 +103,8 @@ public class MainApplication {
                         "}")
                 .setHeader(DeliverToken)
                 .build();
-        JsonNode response = gqlInstance.fetch();
-
-        ObjectMapper mapper = new ObjectMapper();
-        List<FooterModel> footerModels = mapper.readValue(response.toString(),
-                new TypeReference<List<FooterModel>>() {
-                });
-
-        model.addAttribute(footerModels);
-        return response;
+        JsonNode response = gqlInstance.fetch().get("data").get("all_footer").get("items");
+        return response.toString();
     }
 
 
@@ -144,9 +114,8 @@ public class MainApplication {
      * @return the banner
      * @throws JsonProcessingException the json processing exception
      */
-    @GetMapping(value = "/all_header")
-    public JsonNode getBanner() throws JsonProcessingException {
-        GQLWrapper gqlInstance = GQLWrapper.Builder.newInstance()
+    public String getHeader() throws JsonProcessingException {
+        GraphQlWrapper gqlInstance = GraphQlWrapper.Builder.newInstance()
                 .setTag("all_header")
                 .setUrl(BASE_URL)
                 .setQueryString("{\n" +
@@ -166,9 +135,8 @@ public class MainApplication {
                         "}")
                 .setHeader(DeliverToken)
                 .build();
-        JsonNode response = gqlInstance.fetch();
-        System.out.println(response);
-        return response;
+        JsonNode response = gqlInstance.fetch().get("data").get("all_header").get("items");
+        return response.toString();
     }
 
 
@@ -178,9 +146,8 @@ public class MainApplication {
      * @return the contact
      * @throws JsonProcessingException the json processing exception
      */
-    @GetMapping(value = "/all_page")
-    public JsonNode getContact() throws JsonProcessingException {
-        GQLWrapper gqlInstance = GQLWrapper.Builder.newInstance()
+    public String allPages() throws JsonProcessingException {
+        GraphQlWrapper gqlInstance = GraphQlWrapper.Builder.newInstance()
                 .setTag("all_page")
                 .setUrl(BASE_URL)
                 .setQueryString("{\n" +
@@ -204,9 +171,8 @@ public class MainApplication {
                         "}")
                 .setHeader(DeliverToken)
                 .build();
-        JsonNode response = gqlInstance.fetch();
-        System.out.println(response);
-        return response;
+        JsonNode response = gqlInstance.fetch().get("data").get("all_page").get("items");
+        return response.toString();
     }
 
 
