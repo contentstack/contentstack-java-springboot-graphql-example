@@ -3,18 +3,16 @@ package com.contentstack.gqlspring.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-/**
- * The type Blog model.
- */
 @Data
-public class BlogModel {
+public class IndexModel {
 
     @JsonProperty
-    private String date;
+    public Object logoConnection;
     @JsonProperty
-    private String body;
+    public Object navigation;
     @JsonProperty
-    private String title;
+    public String title;
     @JsonProperty
-    private String url;
+    public Object social;
+
 }

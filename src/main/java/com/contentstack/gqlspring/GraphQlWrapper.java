@@ -13,7 +13,7 @@ import java.util.Arrays;
 /**
  * The type Gql.
  */
-final class GQLWrapper {
+final class GraphQlWrapper {
 
     private final int id;
     private final String tag;
@@ -27,7 +27,7 @@ final class GQLWrapper {
      *
      * @param builder the builder
      */
-    public GQLWrapper(Builder builder) {
+    public GraphQlWrapper(Builder builder) {
         this.id = builder.id;
         this.tag = builder.tag;
         this.nodeSplitter = builder.nodeSplitter;
@@ -59,15 +59,9 @@ final class GQLWrapper {
         HttpEntity<JSONObject> entity = new HttpEntity<>(queryJson, this.headers);
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
         HttpStatus statusCode = responseEntity.getStatusCode();
-        if (statusCode == HttpStatus.OK) {
-            String dataString = responseEntity.getBody();
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readTree(dataString);
-        } else {
-            String dataString = responseEntity.getBody();
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readTree(dataString);
-        }
+        String dataString = responseEntity.getBody();
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readTree(dataString);
     }
 
 
@@ -75,13 +69,12 @@ final class GQLWrapper {
      * The type Builder.
      */
     public static class Builder {
-
+        private final String[] nodeSplitter = {};
         private int id;
         private String tag;
         private String url;
         private JSONObject queryJson = new JSONObject();
         private HttpHeaders headers = new HttpHeaders();
-        private final String[] nodeSplitter = {};
 
         private Builder() {
         }
@@ -163,8 +156,8 @@ final class GQLWrapper {
          *
          * @return the gql
          */
-        public GQLWrapper build() {
-            return new GQLWrapper(this);
+        public GraphQlWrapper build() {
+            return new GraphQlWrapper(this);
         }
 
     }
