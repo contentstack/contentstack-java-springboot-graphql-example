@@ -9,13 +9,13 @@
     <link href="styles/third-party.css" rel="stylesheet">
     <link href="styles/style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&amp;display=swap" rel="stylesheet" />
-    <title>Home Page</title>
+    <title>About Us Page</title>
 </head>
 
 <body>
     <div lang="en" th:replace="components/header :: header"></div>
     <main class="mainClass">
-        <div lang="en" th:replace="components/render-components :: renderComponents"></div>
+        <div lang="en" th:include="components/render-components :: renderComponents"></div>
     </main>
     <div lang="en" th:replace="components/footer :: footer"></div>
 </body>

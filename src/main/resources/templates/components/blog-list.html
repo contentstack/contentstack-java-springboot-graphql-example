@@ -1,0 +1,40 @@
+<div class="blog-container" th:fragment="blogList">
+    <div class="blog-column-left">
+        <th:block th:each="List :${blogList}">
+            <div class="blog-list">
+                <a th:href="${List.url}">
+                    <img alt="blog img" class="blog-list-img"
+                        th:src="${List.featured_imageConnection.edges[0].node.url}" />
+                </a>
+                <div class="blog-content">
+                    <a th:href="${List.url}">
+                        <h3 th:text="${List.title}"></h3>
+                    </a>
+
+                    <p>
+                        <th:block th:text="${List.date}"></th:block>
+                        <strong th:text="${List.authorConnection.edges[0].node.title}"></strong>
+                    </p>
+                    <th:block th:utext="${#strings.abbreviate(List.body,350)}"></th:block>
+                    <a th:href="${List.url}">
+                        <span>Read more --></span>
+                    </a>
+                </div>
+            </div>
+        </th:block>
+
+    </div>
+    <div class="blog-column-right">
+        <!-- {entry.page_components[1].widget && (
+        <h2>{entry.page_components[1].widget.title_h2} </h2>
+      )} -->
+        <th:block th:each="blog :${archived}">
+            <a th:href="${blog.url}">
+                <div>
+                    <h4 th:text="${blog.title}"></h4>
+                    <th:block th:utext="${#strings.abbreviate(blog.body,180)}"></th:block>
+                </div>
+            </a>
+        </th:block>
+    </div>
+</div>
