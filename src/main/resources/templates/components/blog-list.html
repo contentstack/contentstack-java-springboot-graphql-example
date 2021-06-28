@@ -3,8 +3,7 @@
         <th:block th:each="List :${blogList}">
             <div class="blog-list">
                 <a th:href="${List.url}">
-                    <img alt="blog img" class="blog-list-img"
-                        th:src="${List.featured_imageConnection.edges[0].node.url}" />
+                    <img alt="blog img" class="blog-list-img" th:src="${List.featured_imageConnection.edges[0].node.url}" />
                 </a>
                 <div class="blog-content">
                     <a th:href="${List.url}">
@@ -12,10 +11,10 @@
                     </a>
 
                     <p>
-                        <th:block th:text="${List.date}"></th:block>
+                        <th:block th:text="${#dates.format(List.Date, 'EEE, MMM dd yyyy')}"></th:block>,
                         <strong th:text="${List.authorConnection.edges[0].node.title}"></strong>
                     </p>
-                    <th:block th:utext="${#strings.abbreviate(List.body,350)}"></th:block>
+                    <p th:utext="${#strings.abbreviate(List.body,350)}"></p>
                     <a th:href="${List.url}">
                         <span>Read more --></span>
                     </a>

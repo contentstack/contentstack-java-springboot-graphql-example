@@ -2,7 +2,8 @@
     <div class="blog-detail" th:object="${blogPost}">
       <h2 th:text="*{title}"></h2>
       <p>
-          <th:block th:text="*{date}"></th:block>
+<!--        <th:block th:text="*{date}"></th:block>-->
+           <th:block th:text="*{#dates.format(date, 'EEE, MMM dd yyyy')}"></th:block>,
         <strong th:text="*{authorConnection.edges[0].node.title}"></strong>
       </p>
       <th:block th:utext="*{body}"></th:block>

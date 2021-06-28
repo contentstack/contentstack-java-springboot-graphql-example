@@ -1,19 +1,19 @@
 <th:block th:fragment="sectionWithHtml">
-    <div class="contact-page-section max-width" th:if="*{section_with_html_code.html_code_alignment == 'left'}">
+    <div class="contact-page-section max-width" th:if="*{section_with_html_code.html_code_alignment} == 'Left'">
         <div class="contact-page-content">
-            <h1 th:text="*{section_with_html_code.title}"></h1>
+            <h2 th:text="*{section_with_html_code.title}"></h2>
             <th:block th:utext="*{section_with_html_code.description}"></th:block>
         </div>
         <div class="contact-page-form">
             <th:block th:utext="*{section_with_html_code.html_code}"></th:block>
         </div>
     </div>
-    <div class="contact-maps-section max-width" th:unless="*{section_with_html_code.html_code_alignment == 'left'}">
+    <div class="contact-maps-section max-width" th:unless="*{section_with_html_code.html_code_alignment} == 'Left'">
         <div class="maps-details">
             <th:block th:utext="*{section_with_html_code.html_code}"></th:block>
         </div>
         <div class="contact-maps-content">
-            <h1 th:text="*{section_with_html_code.title}"></h1>
+            <h2 th:text="*{section_with_html_code.title}"></h2>
             <th:block th:utext="*{section_with_html_code.description}"></th:block>
         </div>
     </div>
