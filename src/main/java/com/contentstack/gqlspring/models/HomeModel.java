@@ -1,7 +1,6 @@
 package com.contentstack.gqlspring.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.Data;
 
 @Data

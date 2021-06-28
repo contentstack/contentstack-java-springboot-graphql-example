@@ -106,6 +106,12 @@
                     }
                 }
             }
+            seo {
+                enable_search_indexing
+                keywords
+                meta_description
+                meta_title
+            }
         }
     }
 }

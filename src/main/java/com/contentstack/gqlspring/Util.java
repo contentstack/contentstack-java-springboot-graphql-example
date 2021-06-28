@@ -14,6 +14,7 @@ public class Util {
             File resource = new ClassPathResource("graphql/" + filename).getFile();
             return new String(Files.readAllBytes(resource.toPath()));
         } catch (IOException e) {
+            System.out.println("Exception occurred");
             e.printStackTrace();
         }
         return null;
