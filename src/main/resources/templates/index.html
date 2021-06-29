@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<!--    <th:block th:each="key:${data.seo}">-->
-<!--        <th:block th:if="${key}=== enable_search_indexing">-->
-<!--            <div th:text="${key}"></div>-->
-<!--        &lt;!&ndash; <meta name="${key.name}" content="" /> &ndash;&gt;-->
-<!--    </th:block>-->
-<!--    </th:block>-->
+    <th:block th:each="key:${data.seo}">
+        <th:block th:if="${key}=== enable_search_indexing">
+            <div th:text="${key}"></div>
+        <!-- <meta name="${key.name}" content="" /> -->
+    </th:block>
+    </th:block>
     <link href="styles/third-party.css" rel="stylesheet">
     <link href="styles/style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&amp;display=swap" rel="stylesheet" />

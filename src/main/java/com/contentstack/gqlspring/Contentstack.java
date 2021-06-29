@@ -1,12 +1,9 @@
 package com.contentstack.gqlspring;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
 
 public class Contentstack {
 
@@ -19,6 +16,16 @@ public class Contentstack {
         loadEnvVar();
     }
 
+    public static <T> T convertToObject(Class<T> clazz, String jsonString) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            return (T) mapper.readValue(jsonString, clazz);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     // Loads credential from from .env
     private void loadEnvVar() {
         Dotenv dotenv = Dotenv.load();
@@ -28,7 +35,6 @@ public class Contentstack {
         String _HOST = dotenv.get("_HOST");
         BASE_URL = "https://" + _HOST + "/stacks/" + _API_KEY + "?environment=" + _ENV;
     }
-
 
     public Object getQuery(@NotNull String query, @NotNull String nodeBy, Class<?> cls) {
 
@@ -44,8 +50,9 @@ public class Contentstack {
                     .setHeader(deliverToken)
                     .build();
 
-            JsonNode strResponse = gqlInstance.fetch().get("data").get(nodeBy).get("items");
-            return toObject(strResponse.toString(), cls);
+            JsonNode jsonNode = gqlInstance.fetch().get("data").get(nodeBy).get("items").get(0);
+            //String jsonFile = new ObjectMapper().writeValueAsString(jsonNode);
+            return convertToObject(cls, jsonNode.toString());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,16 +61,18 @@ public class Contentstack {
     }
 
 
-    private Object toObject(String string, Class<?> cls) {
-        try {
-            return Arrays.asList(new ObjectMapper().readValue(string, cls)).get(0);
-            //return Collections.singletonList(new ObjectMapper().readValue(string, cls)).get(0);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
+//    private Object convertToObject(String string, Class<?> cls) {
+//        try {
+//            ObjectMapper mapper = new ObjectMapper();
+//            Object typeObj = mapper.readValue(string, cls);
+//            return typeObj;
+//            //return Arrays.asList(new ObjectMapper().readValue(string, cls)).get(0);
+//            //return Collections.singletonList(new ObjectMapper().readValue(string, cls)).get(0);
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     public Object getBlogPost(String id, Class<?> cls) {
         try {
@@ -116,8 +125,8 @@ public class Contentstack {
                             "  }\n" +
                             "}")
                     .setHeader(deliverToken).build();
-            JsonNode strResponse =  graphqlBuilderInstance.fetch().get("data").get("all_blog_post").get("items");
-            return toObject(strResponse.toString(), cls);
+            JsonNode strResponse = graphqlBuilderInstance.fetch().get("data").get("all_blog_post").get("items");
+            return convertToObject(cls, strResponse.toString());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
