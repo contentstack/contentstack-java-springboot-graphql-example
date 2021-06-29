@@ -41,6 +41,10 @@ public class GraphqlApp {
         Object footerResp = contentstack.getQuery(queryString,
                 "all_footer", FooterModel[].class);
 
+        System.out.println("headerResp: "+headerResp);
+        System.out.println("homeResp: "+homeResp);
+        System.out.println("footerResp: "+footerResp);
+
         model.addAttribute("about", "home");
         model.addAttribute("banner", "home");
         model.addAttribute("header", headerResp);
