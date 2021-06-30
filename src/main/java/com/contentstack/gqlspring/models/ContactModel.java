@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class BlogModel {
+public class ContactModel {
     @JsonProperty
     public String title;
     @JsonProperty

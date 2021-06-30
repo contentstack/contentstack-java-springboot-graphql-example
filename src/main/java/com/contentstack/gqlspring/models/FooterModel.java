@@ -1,16 +1,20 @@
 package com.contentstack.gqlspring.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
-/**
- * The type Product.
- */
 @Data
-@AllArgsConstructor
 public class FooterModel {
 
     @JsonProperty
-    String title;
+    public Object logoConnection;
+    @JsonProperty
+    public Object navigation;
+    @JsonProperty
+    public String title;
+    @JsonProperty
+    public String copyright;
+    @JsonProperty
+    public Object social;
+
 }

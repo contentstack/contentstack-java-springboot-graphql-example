@@ -4,13 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class BlogModel {
+public class ArchivedModel {
     @JsonProperty
     public String title;
     @JsonProperty
     public String url;
     @JsonProperty
-    public Object seo;
-    @JsonProperty
-    public Object page_components;
+    public String body;
 }

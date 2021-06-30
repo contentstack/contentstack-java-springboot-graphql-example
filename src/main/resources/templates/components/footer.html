@@ -1,0 +1,36 @@
+<footer th:fragment="footer" th:object="${footer}">
+    <div class="max-width footer-div">
+      <div class="col-quarter">
+        <a href="/">
+            <img
+              th:src="*{logoConnection.edges[0].node.url}"
+              alt="contentstack logo"
+              title="contentstack"
+              class="logo footer-logo"
+            />
+            </a>
+      </div>
+      <div class="col-half">
+        <nav>
+          <ul class="nav-ul">
+              <li class="footer-nav-li" th:each="link : *{navigation.link}">
+                <a th:href="${link.href}" th:text="${link.title}"></a>
+              </li>
+          
+          </ul>
+        </nav>
+      </div>
+      <div class="col-quarter social-link">
+        <div class="social-nav">
+            <a
+            th:each="social : *{social.social_share}"
+              th:href="${social.link.href}"
+              th:title="${social.link.title}"
+            >
+              <img th:src="${social.iconConnection.edges[0].node.url}" alt="social icon" />
+            </a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright" th:utext="${footer.copyright}"></div>
+  </footer>

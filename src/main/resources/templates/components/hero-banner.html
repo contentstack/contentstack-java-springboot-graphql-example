@@ -1,0 +1,15 @@
+<div class="hero-banner" th:fragment="heroBanner"
+th:with="bgcolor=${component.hero_banner.bg_color}"
+  th:style="'background-color:'+ @{${bgcolor}}">
+  <div th:classappend="${about}== 'about' ? about-content : home-content">
+    <h1 class="hero-title" th:text="*{hero_banner.banner_title}"></h1>
+    <p class="hero-description" th:classappend="${about}== 'about'? about-desc: ''"
+      th:text="*{hero_banner.banner_description}">
+    </p>
+    <a th:href="*{hero_banner.call_to_action.href}" class="btn tertiary-btn"
+      th:text="*{hero_banner.call_to_action.title}">
+    </a>
+
+  </div>
+  <img alt="Hero Banner Image" th:src="${component.hero_banner.banner_imageConnection.edges[0].node.url}" />
+</div>

@@ -1,0 +1,20 @@
+<th:block th:fragment="renderComponents">
+  <th:block th:each="component: ${data.page_components}" th:object="${component}" th:switch="*{__typename}">
+    <th:block th:case="'PagePageComponentsHeroBanner'">
+      <th:block th:if="${banner}=='home'" th:insert="components/hero-banner :: heroBanner"></th:block>
+      <th:block th:if="${banner}=='blog'" th:insert="components/blog-banner :: blogBanner"></th:block>
+    </th:block>
+    <th:block th:case="'PagePageComponentsSection'" th:insert="components/section :: section"></th:block>
+    <th:block th:case="'PagePageComponentsSectionWithBuckets'">
+      <th:block th:if="${about} == 'home'" th:insert="components/section-bucket :: sectionBucket"></th:block>
+      <th:block th:if="${about} == 'about'" th:insert="components/about-section-bucket :: aboutSectionBucket">
+      </th:block>
+    </th:block>
+    <th:block th:case="'PagePageComponentsSectionWithCards'" th:insert="components/card-section :: cardSection">
+    </th:block>
+    <th:block th:case="'PagePageComponentsFromBlog'" th:insert="components/blog-section :: blogSection"></th:block>
+    <th:block th:case="'PagePageComponentsOurTeam'" th:insert="components/team-section :: teamSection"></th:block>
+    <th:block th:case="'PagePageComponentsSectionWithHtmlCode'"
+      th:insert="components/section-with-html-code :: sectionWithHtml"></th:block>
+  </th:block>
+</th:block>
