@@ -4,13 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class BlogModel {
+public class HeaderModel {
+
+    @JsonProperty
+    public Object logoConnection;
+    @JsonProperty
+    public Object navigation_menu;
+    @JsonProperty
+    public Object notification_bar;
     @JsonProperty
     public String title;
-    @JsonProperty
-    public String url;
-    @JsonProperty
-    public Object seo;
-    @JsonProperty
-    public Object page_components;
+
 }

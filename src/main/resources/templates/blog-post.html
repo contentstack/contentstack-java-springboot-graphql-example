@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <th:block th:each="key:${data.seo}">
+    <th:block th:each="key:${blogPost.seo}">
       <th:block
         th:if="${#strings.arraySplit(key,'=')[0]}!= enable_search_indexing"
       >
@@ -22,14 +22,15 @@
         />
       </th:block>
     </th:block>
-    <link href="styles/third-party.css" rel="stylesheet" />
-    <link href="styles/style.css" rel="stylesheet" />
+    <link href="../styles/third-party.css" rel="stylesheet" />
+    <link href="../styles/style.css" rel="stylesheet" />
     <link
       href="https://fonts.googleapis.com/css?family=Inter&amp;display=swap"
       rel="stylesheet"
     />
-    <title th:text="${data.title}+ ' Page'"></title>
+    <title>Blog Posts</title>
   </head>
+
   <body>
     <div lang="en" th:replace="components/header :: header"></div>
     <main class="mainClass">
@@ -37,6 +38,7 @@
         lang="en"
         th:replace="components/render-components :: renderComponents"
       ></div>
+      <div lang="en" th:replace="components/blog-content :: blogPost"></div>
     </main>
     <div lang="en" th:replace="components/footer :: footer"></div>
   </body>

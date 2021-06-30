@@ -1,0 +1,24 @@
+<div class="community-section" th:fragment="blogSection">
+  <div class="community-head">
+    <h2 th:text="*{from_blog.title_h2}"></h2>
+
+    <a th:href="*{from_blog.view_articles.href}" class="btn secondary-btn article-btn"
+      th:text="*{from_blog.view_articles.title}">
+    </a>
+
+  </div>
+  <div class="home-featured-blogs">
+    <div class="featured-blog" th:each="blog : ${component.from_blog.featured_blogsConnection.edges}">
+      <img th:src="${blog.node.featured_imageConnection.edges[0].node.url}" alt="blog post images" class="blog-post-img" />
+
+      <div class="featured-content" >
+        <h3 th:text="${blog.node.title}"></h3>
+        <div th:utext="${#strings.abbreviate(blog.node.body,250)}"></div>
+
+        <a th:href="${blog.node.url}" class="blogpost-readmore">
+          Read More -->
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

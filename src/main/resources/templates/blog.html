@@ -1,66 +1,48 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.thymeleaf.org ">
-<head>
-    <title>Blogs</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="contentstack">
-    <meta name="description" content="contentstack">
-    <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon"/>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/responsive.css" rel="stylesheet">
-</head>
-<body>
-<div id="wrapper">
-    <div class="page-title">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                    <div class="title">
-                        <h1>Blogs</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <section class="section">
-        <div class="container new-container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="page-wrapper">
-                        <div class="blog-list clearfix">
-                            <div class="blog-box row">
-                                <div class="col-md-12">
-                                    <div class="about-image"><img class="img-fluid" src="./images/about-us.jpg"
-                                                                  alt="about us"></div>
-                                    <div class="about-content" th:utext="${blog}"></div>
-                                </div>
-                            </div>
-                        </div><!-- end blog-list -->
-                    </div><!-- end page-wrapper -->
-                </div><!-- end col -->
-            </div><!-- end row -->
-        </div><!-- end container -->
-    </section>
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="copyright">&copy; 2020 design by: contentstack</div>
-                </div>
-            </div>
-        </div><!-- end container -->
-    </footer><!-- end footer -->
-    <div class="dmtop">Scroll to Top</div>
-</div><!-- end wrapper -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <th:block th:each="key:${data.seo}">
+      <th:block
+        th:if="${#strings.arraySplit(key,'=')[0]}!= enable_search_indexing"
+      >
+        <meta
+          th:if="${#strings.contains(key,'meta_')}"
+          th:with="name=${(#strings.arraySplit(key,'=')[0])}"
+          th:name="${#strings.arraySplit(name,'_')[1]}"
+          th:content="${#strings.arraySplit(key,'=')[1]}"
+        />
+        <meta
+          th:unless="${#strings.contains(key,'meta_')}"
+          th:name="${#strings.arraySplit(key,'=')[0]}"
+          th:content="${#strings.arraySplit(key,'=')[1]}"
+        />
+      </th:block>
+    </th:block>
+    <link href="styles/third-party.css" rel="stylesheet" />
+    <link href="styles/style.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Inter&amp;display=swap"
+      rel="stylesheet"
+    />
+    <title th:text="${data.title}+ ' Page'"></title>
+  </head>
 
-
-<script src="js/jquery.min.js"></script>
-<script src="js/script.js"></script>
-
-</body>
+  <body>
+    <div lang="en" th:replace="components/header :: header"></div>
+    <main class="mainClass">
+      <div
+        lang="en"
+        th:replace="components/render-components :: renderComponents"
+      ></div>
+      <th:block
+        lang="en"
+        th:replace="components/blog-list :: blogList"
+      ></th:block>
+    </main>
+    <div lang="en" th:replace="components/footer :: footer"></div>
+  </body>
 </html>

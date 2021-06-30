@@ -1,0 +1,21 @@
+<div class="blog-container" th:fragment="blogPost" >
+    <div class="blog-detail" th:object="${blogPost}">
+      <h2 th:text="*{title}"></h2>
+      <p>
+           <th:block th:text="*{#dates.format(date, 'EEE, MMM dd yyyy')}"></th:block>,
+        <strong th:text="*{authorConnection.edges[0].node.title}"></strong>
+      </p>
+      <th:block th:utext="*{body}"></th:block>
+    </div>
+    <div class="blog-column-right">
+      <div class="related-post">
+          <th:block th:each="banner :${data.page_components}">
+            <th:block th:if="${banner.__typename}== 'PagePageComponentsWidget'">
+                <h2 th:if="${banner.widget.type} == 'Related Posts'" th:text="${banner.widget.title_h2}"></h2>
+            </th:block>
+          </th:block>
+          <th:block th:insert="components/archive-relative :: archivePost"></th:block>
+        
+      </div>
+    </div>
+  </div>
