@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
 import java.util.Objects;
 
 @SpringBootApplication
@@ -93,11 +92,11 @@ public class GraphqlApp {
 
         String archivedBlogsQuery = Objects.requireNonNull(Util.load("archived.graphql"));
         Object archivedBlogsResp = contentstack.getQuery(archivedBlogsQuery,
-                "all_blog_post", ArchivedModel[].class); // TODO: inList it
+                "all_blog_post", ArchivedModel[].class);
 
         String allBlogListQuery = Objects.requireNonNull(Util.load("no_archived.graphql"));
         Object allBlogListResp = contentstack.getQuery(allBlogListQuery,
-                "all_blog_post", BlogListModel[].class); // TODO: inList it
+                "all_blog_post", BlogListModel[].class);
 
         String queryString = Objects.requireNonNull(Util.load("footer.graphql"));
         Object footerResp = contentstack.getQuery(queryString,
@@ -108,8 +107,6 @@ public class GraphqlApp {
             model.addAttribute("home", "Could not fetch Blog page..");
         } else {
             model.addAttribute("banner", "blog");
-            model.addAttribute("standardDate", new Date());
-
             model.addAttribute("header", headerResp);
             model.addAttribute("data", blogResp);
             model.addAttribute("archived", archivedBlogsResp);
@@ -168,8 +165,6 @@ public class GraphqlApp {
             model.addAttribute("blog post", "Could not fetch Blog post page..");
         } else {
             model.addAttribute("banner", "blog");
-            model.addAttribute("standardDate", new Date());
-
             model.addAttribute("header", headerResp);
             model.addAttribute("blogPost", blogPostResp);
             model.addAttribute("data", blogResp);
