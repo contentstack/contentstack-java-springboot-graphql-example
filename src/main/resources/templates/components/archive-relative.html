@@ -1,0 +1,10 @@
+<th:block th:fragment="archivePost">
+  <th:block th:each="blog :${blogPost.related_postConnection.edges}">
+    <a th:href="${blog.node.url}">
+      <div>
+        <h4 th:text="${blog.node.title}"></h4>
+        <th:block th:utext="${#strings.abbreviate(blog.node.body,180)}"></th:block>
+      </div>
+    </a>
+  </th:block>
+</th:block>

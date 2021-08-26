@@ -1,0 +1,16 @@
+<div class="member-main-section" th:fragment="sectionBucket">
+  <div class="member-head">
+    <h2 th:text="*{section_with_buckets.title_h2}"></h2>
+    <p th:text="*{section_with_buckets.description}"></p>
+  </div>
+  <div class="member-section">
+    <div class="content-section" th:each="bucket :${component.section_with_buckets.buckets}">
+      <img th:src="${bucket.iconConnection.edges[0].node.url}" alt="bucket icon" />
+
+      <h3 th:utext="${bucket.title_h3}"></h3>
+      <div th:utext="${bucket.description}"></div>
+      <a th:href="${bucket.call_to_action.href}" th:utext="${bucket.call_to_action.title}">
+      </a>
+    </div>
+  </div>
+</div>

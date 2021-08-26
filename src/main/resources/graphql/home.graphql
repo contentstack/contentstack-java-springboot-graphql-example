@@ -1,0 +1,117 @@
+{
+    all_page(where: {url: "/"}) {
+        items {
+            title
+            page_components {
+                ... on PagePageComponentsFromBlog {
+                    __typename
+                    from_blog {
+                        title_h2
+                        view_articles {
+                            title
+                            href
+                        }
+                        featured_blogsConnection {
+                            edges {
+                                node {
+                                    ... on BlogPost {
+                                        title
+                                        featured_imageConnection {
+                                            edges {
+                                                node {
+                                                    url
+                                                }
+                                            }
+                                        }
+                                        body
+                                        url
+                                        date
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                ... on PagePageComponentsHeroBanner {
+                    __typename
+                    hero_banner {
+                        banner_description
+                        banner_title
+                        bg_color
+                        call_to_action {
+                            href
+                            title
+                        }
+                        banner_imageConnection {
+                            edges {
+                                node {
+                                    url
+                                }
+                            }
+                        }
+                    }
+                }
+                ... on PagePageComponentsSection {
+                    __typename
+                    section {
+                        imageConnection {
+                            edges {
+                                node {
+                                    url
+                                }
+                            }
+                        }
+                        title_h2
+                        description
+                        call_to_action {
+                            href
+                            title
+                        }
+                        image_alignment
+                    }
+                }
+                ... on PagePageComponentsSectionWithBuckets {
+                    __typename
+                    section_with_buckets {
+                        title_h2
+                        buckets {
+                            description
+                            title_h3
+                            call_to_action {
+                                href
+                                title
+                            }
+                            iconConnection {
+                                edges {
+                                    node {
+                                        url
+                                    }
+                                }
+                            }
+                        }
+                        description
+                    }
+                }
+                ... on PagePageComponentsSectionWithCards {
+                    __typename
+                    section_with_cards {
+                        cards {
+                            title_h3
+                            description
+                            call_to_action {
+                                href
+                                title
+                            }
+                        }
+                    }
+                }
+            }
+            seo {
+                enable_search_indexing
+                keywords
+                meta_description
+                meta_title
+            }
+        }
+    }
+}

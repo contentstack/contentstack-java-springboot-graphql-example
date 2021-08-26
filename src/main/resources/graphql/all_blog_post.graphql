@@ -1,0 +1,36 @@
+{
+    all_blog_post(where: {url: "/blog/robotics-changing-our-lives-and-future"}) {
+        items {
+            title
+            url
+            seo {
+                meta_title
+                meta_description
+                enable_search_indexing
+                keywords
+            }
+            related_postConnection {
+                edges {
+                    node {
+                        ... on BlogPost {
+                            title
+                            url
+                            body
+                        }
+                    }
+                }
+            }
+            body
+            date
+            authorConnection {
+                edges {
+                    node {
+                        ... on Author {
+                            title
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
