@@ -15,8 +15,8 @@ public class Contentstack {
 
     private static String BASE_URL;
     private static String deliverToken;
+    private static final String ITEMS = "items";
 
-    // Loads everytime when new instance is created for the Contentstack class
     public Contentstack() {
         loadEnvVar();
     }
@@ -24,14 +24,13 @@ public class Contentstack {
     public static <T> T convertToObject(Class<T> clazz, String jsonString) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            return (T) mapper.readValue(jsonString, clazz);
+            return mapper.readValue(jsonString, clazz);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    // Loads credential from from .env
     private void loadEnvVar() {
         Dotenv dotenv = Dotenv.load();
         deliverToken = dotenv.get("_EVV_DELIVERY_TOKEN");
@@ -56,11 +55,11 @@ public class Contentstack {
                     .build();
 
             if (cls.isAssignableFrom(BlogListModel[].class) || cls.isAssignableFrom(ArchivedModel[].class)) {
-                JsonNode jsonNode = gqlInstance.fetch().get("data").get(nodeBy).get("items");
+                JsonNode jsonNode = gqlInstance.fetch().get("data").get(nodeBy).get(ITEMS);
                 return toListObject(cls, jsonNode.toString());
             }
 
-            JsonNode jsonNode = gqlInstance.fetch().get("data").get(nodeBy).get("items").get(0);
+            JsonNode jsonNode = gqlInstance.fetch().get("data").get(nodeBy).get(ITEMS).get(0);
             return convertToObject(cls, jsonNode.toString());
 
         } catch (Exception e) {
@@ -72,7 +71,6 @@ public class Contentstack {
 
     private Object toListObject(Class<?> cls, String string) {
         try {
-            //return Arrays.asList(new ObjectMapper().readValue(string, cls)).get(0);
             return Collections.singletonList(new ObjectMapper().readValue(string, cls)).get(0);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -131,12 +129,11 @@ public class Contentstack {
                             "  }\n" +
                             "}")
                     .setHeader(deliverToken).build();
-            JsonNode strResponse = graphqlBuilderInstance.fetch().get("data").get("all_blog_post").get("items").get(0);
+            JsonNode strResponse = graphqlBuilderInstance.fetch().get("data").get("all_blog_post").get(ITEMS).get(0);
             return convertToObject(cls, strResponse.toString());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
-            return null;
+            throw new IllegalArgumentException("Invalid = graphql query");
         }
     }
 
