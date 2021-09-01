@@ -20,6 +20,15 @@ import java.util.Objects;
 public class GraphqlApp {
 
     private static Contentstack contentstack;
+    private static final String AllPage = "all_page";
+    private static final String ABOUT = "about";
+    private static final String FOOTER = "footer";
+    private static final String HEADER = "header";
+    private static final String HEADER_GRAPHQL = "header.graphql";
+    private static final String FOOTER_GRAPHQL = "footer.graphql";
+    private static final String ALL_HEADER = "all_header";
+    private static final String ALL_FOOTER = "all_footer";
+    private static final String BANNER = "banner";
 
     public static void main(String[] args) {
         contentstack = new Contentstack();
@@ -29,23 +38,23 @@ public class GraphqlApp {
 
     @GetMapping("/")
     public String loadHomePage(Model model) {
-        String headerQuery = Objects.requireNonNull(Util.load("header.graphql"));
+        String headerQuery = Objects.requireNonNull(Util.load(HEADER_GRAPHQL));
         Object headerResp = contentstack.getQuery(headerQuery,
-                "all_header", HeaderModel.class);
+                ALL_HEADER, HeaderModel.class);
 
         String homeQueryString = Objects.requireNonNull(Util.load("home.graphql"));
         Object homeResp = contentstack.getQuery(homeQueryString,
-                "all_page", HomeModel.class);
+                AllPage, HomeModel.class);
 
-        String queryString = Objects.requireNonNull(Util.load("footer.graphql"));
+        String queryString = Objects.requireNonNull(Util.load(FOOTER_GRAPHQL));
         Object footerResp = contentstack.getQuery(queryString,
-                "all_footer", FooterModel.class);
+                ALL_FOOTER, FooterModel.class);
 
-        model.addAttribute("about", "home");
-        model.addAttribute("banner", "home");
-        model.addAttribute("header", headerResp);
+        model.addAttribute(ABOUT, "home");
+        model.addAttribute(BANNER, "home");
+        model.addAttribute(HEADER, headerResp);
         model.addAttribute("data", homeResp);
-        model.addAttribute("footer", footerResp);
+        model.addAttribute(FOOTER, footerResp);
         return "index";
     }
 
@@ -53,27 +62,27 @@ public class GraphqlApp {
     public String aboutUs(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Model model) {
 
 
-        String headerQuery = Objects.requireNonNull(Util.load("header.graphql"));
+        String headerQuery = Objects.requireNonNull(Util.load(HEADER_GRAPHQL));
         Object headerResp = contentstack.getQuery(headerQuery,
-                "all_header", HeaderModel.class);
+                ALL_HEADER, HeaderModel.class);
 
         String aboutQuery = Objects.requireNonNull(Util.load("about_us.graphql"));
         Object aboutResp = contentstack.getQuery(aboutQuery,
-                "all_page", HomeModel.class);
+                AllPage, HomeModel.class);
 
-        String queryString = Objects.requireNonNull(Util.load("footer.graphql"));
+        String queryString = Objects.requireNonNull(Util.load(FOOTER_GRAPHQL));
         Object footerResp = contentstack.getQuery(queryString,
-                "all_footer", FooterModel.class);
+                ALL_FOOTER, FooterModel.class);
 
 
-        if (headerResp == null || aboutResp == null || footerResp == null) {
+        if (headerResp == null | aboutResp == null | footerResp == null) {
             model.addAttribute("home", "Could not fetch About page..");
         } else {
-            model.addAttribute("about", "about");
-            model.addAttribute("banner", "home");
-            model.addAttribute("header", headerResp);
+            model.addAttribute(ABOUT, ABOUT);
+            model.addAttribute(BANNER, "home");
+            model.addAttribute(HEADER, headerResp);
             model.addAttribute("data", aboutResp);
-            model.addAttribute("footer", footerResp);
+            model.addAttribute(FOOTER, footerResp);
         }
         return "about-us";
     }
@@ -81,13 +90,13 @@ public class GraphqlApp {
     @GetMapping("/blog")
     public String blogs(Model model) {
 
-        String headerQuery = Objects.requireNonNull(Util.load("header.graphql"));
+        String headerQuery = Objects.requireNonNull(Util.load(HEADER_GRAPHQL));
         Object headerResp = contentstack.getQuery(headerQuery,
-                "all_header", HeaderModel.class);
+                ALL_HEADER, HeaderModel.class);
 
         String blogQuery = Objects.requireNonNull(Util.load("getblogs.graphql"));
         Object blogResp = contentstack.getQuery(blogQuery,
-                "all_page", BlogModel.class);
+                AllPage, BlogModel.class);
 
 
         String archivedBlogsQuery = Objects.requireNonNull(Util.load("archived.graphql"));
@@ -98,20 +107,20 @@ public class GraphqlApp {
         Object allBlogListResp = contentstack.getQuery(allBlogListQuery,
                 "all_blog_post", BlogListModel[].class);
 
-        String queryString = Objects.requireNonNull(Util.load("footer.graphql"));
+        String queryString = Objects.requireNonNull(Util.load(FOOTER_GRAPHQL));
         Object footerResp = contentstack.getQuery(queryString,
-                "all_footer", FooterModel.class);
+                ALL_FOOTER, FooterModel.class);
 
 
-        if (headerResp == null || blogResp == null || archivedBlogsResp == null || allBlogListResp == null || footerResp == null) {
+        if (headerResp == null | blogResp == null | archivedBlogsResp == null | allBlogListResp == null | footerResp == null) {
             model.addAttribute("home", "Could not fetch Blog page..");
         } else {
-            model.addAttribute("banner", "blog");
-            model.addAttribute("header", headerResp);
+            model.addAttribute(BANNER, "blog");
+            model.addAttribute(HEADER, headerResp);
             model.addAttribute("data", blogResp);
             model.addAttribute("archived", archivedBlogsResp);
             model.addAttribute("blogList", allBlogListResp);
-            model.addAttribute("footer", footerResp);
+            model.addAttribute(FOOTER, footerResp);
         }
         return "blog";
     }
@@ -122,22 +131,22 @@ public class GraphqlApp {
 
         String headerQuery = Objects.requireNonNull(Util.load("header.graphql"));
         Object headerResp = contentstack.getQuery(headerQuery,
-                "all_header", HeaderModel.class);
+                ALL_HEADER, HeaderModel.class);
 
         String contactusQuery = Objects.requireNonNull(Util.load("contact_us.graphql"));
         Object contactusResp = contentstack.getQuery(contactusQuery,
-                "all_page", ContactModel.class);
+                AllPage, ContactModel.class);
 
-        String queryString = Objects.requireNonNull(Util.load("footer.graphql"));
+        String queryString = Objects.requireNonNull(Util.load(FOOTER_GRAPHQL));
         Object footerResp = contentstack.getQuery(queryString,
-                "all_footer", FooterModel.class);
+                ALL_FOOTER, FooterModel.class);
 
-        if (headerResp == null || footerResp == null | contactusResp == null) {
+        if (headerResp == null | footerResp == null | contactusResp == null) {
             model.addAttribute("home", "Could not fetch Contact page..");
         } else {
-            model.addAttribute("header", headerResp);
+            model.addAttribute(HEADER, headerResp);
             model.addAttribute("data", contactusResp);
-            model.addAttribute("footer", footerResp);
+            model.addAttribute(FOOTER, footerResp);
 
         }
         return "contact-us";
@@ -147,28 +156,28 @@ public class GraphqlApp {
     @GetMapping("/blog/{id}")
     public String blogPost(@PathVariable String id, Model model) {
 
-        String headerQuery = Objects.requireNonNull(Util.load("header.graphql"));
+        String headerQuery = Objects.requireNonNull(Util.load(HEADER_GRAPHQL));
         Object headerResp = contentstack.getQuery(headerQuery,
-                "all_header", HeaderModel.class);
+                ALL_HEADER, HeaderModel.class);
 
         Object blogPostResp = contentstack.blogPostById("/blog/" + id, BlogPostModel.class);
 
         String blogQuery = Objects.requireNonNull(Util.load("blog_query.graphql"));
         Object blogResp = contentstack.getQuery(blogQuery,
-                "all_page", CustomBlogModel.class);
+                AllPage, CustomBlogModel.class);
 
-        String queryString = Objects.requireNonNull(Util.load("footer.graphql"));
+        String queryString = Objects.requireNonNull(Util.load(FOOTER_GRAPHQL));
         Object footerResp = contentstack.getQuery(queryString,
-                "all_footer", FooterModel.class);
+                ALL_FOOTER, FooterModel.class);
 
-        if (headerResp == null || blogPostResp == null || blogResp == null || footerResp == null) {
+        if (headerResp == null | blogPostResp == null | blogResp == null | footerResp == null) {
             model.addAttribute("blog post", "Could not fetch Blog post page..");
         } else {
-            model.addAttribute("banner", "blog");
-            model.addAttribute("header", headerResp);
+            model.addAttribute(BANNER, "blog");
+            model.addAttribute(HEADER, headerResp);
             model.addAttribute("blogPost", blogPostResp);
             model.addAttribute("data", blogResp);
-            model.addAttribute("footer", footerResp);
+            model.addAttribute(FOOTER, footerResp);
         }
         return "blog-post";
     }
