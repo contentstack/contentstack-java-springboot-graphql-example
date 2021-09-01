@@ -1,9 +1,0 @@
-{
-    all_blog_post(where: {is_archived: true}) {
-        items {
-            title
-            url
-            body
-        }
-    }
-}
