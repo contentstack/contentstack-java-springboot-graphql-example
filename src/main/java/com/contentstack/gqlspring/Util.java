@@ -9,12 +9,15 @@ import java.nio.file.Files;
 
 public class Util {
 
+    private Util() {
+        throw new IllegalStateException("private constructor = not allowed");
+    }
+
     public static String load(@NotNull String filename) {
         try {
             File resource = new ClassPathResource("graphql/" + filename).getFile();
             return new String(Files.readAllBytes(resource.toPath()));
         } catch (IOException e) {
-            System.out.println("Exception occurred");
             e.printStackTrace();
         }
         return null;
