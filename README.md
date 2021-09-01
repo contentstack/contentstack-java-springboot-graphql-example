@@ -23,12 +23,6 @@ This step-by-step guide details how to create a Java sample app via Spring Boot.
 
 
 
-
-
-
-
-
-
 ### Screenshots
 
 ![image info](./assets/one.png)
