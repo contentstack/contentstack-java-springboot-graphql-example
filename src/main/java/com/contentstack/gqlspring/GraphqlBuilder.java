@@ -20,7 +20,7 @@ final class GraphqlBuilder {
         this.tag = builder.tag;
         this.url = builder.url;
         this.queryJson = builder.queryJson;
-        this.headers = builder.headers;
+        this.headers = builder.httpHeaders;
     }
 
     @Override
@@ -47,7 +47,7 @@ final class GraphqlBuilder {
         private String tag;
         private String url;
         private JSONObject queryJson = new JSONObject();
-        private HttpHeaders headers = new HttpHeaders();
+        private HttpHeaders httpHeaders = new HttpHeaders();
 
         private Builder() {
         }
@@ -81,7 +81,7 @@ final class GraphqlBuilder {
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             headers.setAccept(acceptableMediaTypes);
             headers.add("access_token", access_token);
-            this.headers = headers;
+            this.httpHeaders = headers;
             return this;
         }
 
