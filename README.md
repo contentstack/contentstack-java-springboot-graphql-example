@@ -25,28 +25,28 @@ This step-by-step guide details how to create a Java sample app via Spring Boot.
 
 ### Screenshots
 
-![image info](./assets/one.png)
+![image info](images/one.png)
 
 - Home
 
-![image info](./assets/two.png)
+![image info](images/two.png)
 
 - About Us
 
-![image info](./assets/three.png)
+![image info](images/three.png)
 
 - Our Team
 
-![image info](./assets/four.png)
+![image info](images/four.png)
 
 - Blog
 
-![image info](./assets/five.png)
+![image info](images/five.png)
 
 - Blogs
 
-![image info](./assets/six.png)
+![image info](images/six.png)
 
 - Contact Us
 
-![image info](./assets/seven.png)
+![image info](images/seven.png)
