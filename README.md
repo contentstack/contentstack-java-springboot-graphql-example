@@ -23,28 +23,28 @@ This step-by-step guide details how to create a Java sample webapp via spring-bo
 
 ### Screenshots
 
-![image info](images/one.png)
+![image info](assets/one.png)
 
 - Home
 
-![image info](images/two.png)
+![image info](assets/two.png)
 
 - About Us
 
-![image info](images/three.png)
+![image info](assets/three.png)
 
 - Our Team
 
-![image info](images/four.png)
+![image info](assets/four.png)
 
 - Blog
 
-![image info](images/five.png)
+![image info](assets/five.png)
 
 - Blogs
 
-![image info](images/six.png)
+![image info](assets/six.png)
 
 - Contact Us
 
-![image info](images/seven.png)
+![image info](assets/seven.png)
