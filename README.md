@@ -1,15 +1,15 @@
-## GraphQl-Spring-Boot-Client Example Web App
+## Graphql-spring-boot-client example application
 
 ### Quick starter for graphql api integration in spring boot
 
 
 Spring Boot is an open-source framework that allows Java developers to create production-grade Spring applications.
 
-This step-by-step guide details how to create a Java sample app via Spring Boot. This app, powered by Contentstack’s Java SDK, uses GraphQL API to fetch content stored in Contentstack and display it on your application.
+This step-by-step guide details how to create a Java sample webapp via spring-boot. This app, powered by Contentstack GraphQL API to fetch content stored in Contentstack and display it on your application.
 
 ## Prerequisites
 
--   A text editor or an IDE, for example, [IntelliJ IDEA](https://www.jetbrains.com/idea/download/)
+-   An IDE, for example, [IntelliJ IDEA](https://www.jetbrains.com/idea/download/) / [STS](https://spring.io/tools) / [VSCode](https://code.visualstudio.com/download) / [Ecllipse](https://www.eclipse.org/downloads/)
 
 -   [JDK 1.8 or later](https://www.oracle.com/in/java/technologies/javase/javase-jdk8-downloads.html)
 
