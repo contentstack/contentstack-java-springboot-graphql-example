@@ -15,8 +15,6 @@ This step-by-step guide details how to create a Java sample webapp via spring-bo
 
 -   Gradle 4+ or Maven 3.2+
 
--   [Spring Tool Suite (STS)](https://spring.io/tools)
-
 -   [Contentstack account](https://www.contentstack.com/login/)
 
 
