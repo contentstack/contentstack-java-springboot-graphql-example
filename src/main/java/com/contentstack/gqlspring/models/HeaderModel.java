@@ -8,10 +8,10 @@ public class HeaderModel {
 
     @JsonProperty
     public Object logoConnection;
-    @JsonProperty
-    public Object navigation_menu;
-    @JsonProperty
-    public Object notification_bar;
+    @JsonProperty("navigation_menu")
+    public Object navigationMenu;
+    @JsonProperty("notification_bar")
+    public Object notificationBar;
     @JsonProperty
     public String title;
 

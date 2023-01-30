@@ -21,6 +21,6 @@ public class BlogPostModel {
     public String body;
     @JsonProperty
     public Object authorConnection;
-    @JsonProperty
-    public Object related_postConnection;
+    @JsonProperty("related_postConnection")
+    public Object relatedPostConnection;
 }

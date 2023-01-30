@@ -19,7 +19,7 @@ public class BlogListModel {
     public String body;
     @JsonProperty
     public Object authorConnection;
-    @JsonProperty
-    public Object featured_imageConnection;
+    @JsonProperty("featured_imageConnection")
+    public Object featuredImageConnection;
 
 }

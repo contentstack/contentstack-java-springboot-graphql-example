@@ -11,6 +11,6 @@ public class AboutModel {
     public String url;
     @JsonProperty
     public Object seo;
-    @JsonProperty
-    public Object page_components;
+    @JsonProperty("page_components")
+    public Object pageComponents;
 }

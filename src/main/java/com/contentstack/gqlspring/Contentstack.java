@@ -12,9 +12,8 @@ import java.util.Collections;
 
 public class Contentstack {
 
-
-    private static String BASE_URL;
-    private static String deliverToken;
+    private static final String STRING = "      }\n";
+    private static String baseURL;
     private static final String ITEMS = "items";
 
     public Contentstack() {
@@ -31,25 +30,25 @@ public class Contentstack {
         }
     }
 
-    private void loadEnvVar() {
+    private static void loadEnvVar() {
         Dotenv dotenv = Dotenv.load();
-        deliverToken = dotenv.get("_EVV_DELIVERY_TOKEN");
-        String _API_KEY = dotenv.get("_ENV_API_KEY");
-        String _ENV = dotenv.get("_ENV");
-        String _HOST = dotenv.get("_HOST");
-        BASE_URL = "https://" + _HOST + "/stacks/" + _API_KEY + "?environment=" + _ENV;
+        String apiKey = dotenv.get("_ENV_API_KEY");
+        String env = dotenv.get("_ENV");
+        String host = dotenv.get("_HOST");
+        baseURL = "https://" + host + "/stacks/" + apiKey + "?environment=" + env;
     }
 
     public Object getQuery(@NotNull String query, @NotNull String nodeBy, Class<?> cls) {
 
         try {
             if (query.isEmpty() || nodeBy.isEmpty()) {
-                throw new Exception("Please provide a valid node type");
+                throw new IllegalArgumentException("Please provide a valid node type");
             }
 
+            String deliverToken = Dotenv.load().get("_EVV_DELIVERY_TOKEN");
             GraphqlBuilder gqlInstance = GraphqlBuilder.Builder.newInstance()
                     .setTag(nodeBy)
-                    .setUrl(BASE_URL)
+                    .setUrl(baseURL)
                     .setQueryString(query)
                     .setHeader(deliverToken)
                     .build();
@@ -68,7 +67,6 @@ public class Contentstack {
         return null;
     }
 
-
     private Object toListObject(Class<?> cls, String string) {
         try {
             return Collections.singletonList(new ObjectMapper().readValue(string, cls)).get(0);
@@ -82,7 +80,7 @@ public class Contentstack {
         try {
             GraphqlBuilder graphqlBuilderInstance = GraphqlBuilder.Builder.newInstance()
                     .setTag("all_blog_post")
-                    .setUrl(BASE_URL)
+                    .setUrl(baseURL)
                     .setQueryString("{\n" +
                             "  all_blog_post(where: {url:" + "\"" + id + "\"" + "}) {\n" +
                             "    items {\n" +
@@ -95,7 +93,7 @@ public class Contentstack {
                             "        keywords\n" +
                             "        meta_description\n" +
                             "        meta_title\n" +
-                            "      }\n" +
+                            "}\n" +
                             "      related_postConnection {\n" +
                             "        edges {\n" +
                             "          node {\n" +
@@ -115,7 +113,7 @@ public class Contentstack {
                             "            }\n" +
                             "          }\n" +
                             "        }\n" +
-                            "      }\n" +
+                            STRING +
                             "      authorConnection {\n" +
                             "        edges {\n" +
                             "          node {\n" +
@@ -124,11 +122,11 @@ public class Contentstack {
                             "            }\n" +
                             "          }\n" +
                             "        }\n" +
-                            "      }\n" +
+                            STRING +
                             "    }\n" +
                             "  }\n" +
                             "}")
-                    .setHeader(deliverToken).build();
+                    .setHeader(Dotenv.load().get("_EVV_DELIVERY_TOKEN")).build();
             JsonNode strResponse = graphqlBuilderInstance.fetch().get("data").get("all_blog_post").get(ITEMS).get(0);
             return convertToObject(cls, strResponse.toString());
         } catch (Exception e) {
@@ -136,6 +134,5 @@ public class Contentstack {
             throw new IllegalArgumentException("Invalid = graphql query");
         }
     }
-
 
 }

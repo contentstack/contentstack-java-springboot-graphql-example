@@ -56,12 +56,10 @@ final class GraphqlBuilder {
             return new Builder();
         }
 
-
         public Builder setTag(String tag) {
             this.tag = tag;
             return this;
         }
-
 
         public Builder setUrl(String url) {
             this.url = url;
@@ -75,12 +73,12 @@ final class GraphqlBuilder {
             return this;
         }
 
-        public Builder setHeader(String access_token) {
+        public Builder setHeader(String accessToken) {
             final HttpHeaders headers = new HttpHeaders();
             ArrayList<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             headers.setAccept(acceptableMediaTypes);
-            headers.add("access_token", access_token);
+            headers.add("access_token", accessToken);
             this.httpHeaders = headers;
             return this;
         }
