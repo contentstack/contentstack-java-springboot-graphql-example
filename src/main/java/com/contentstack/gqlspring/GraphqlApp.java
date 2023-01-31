@@ -136,7 +136,7 @@ public class GraphqlApp {
                                 ALL_FOOTER, FooterModel.class);
 
                 if (headerResp == null || footerResp == null || contactusResp == null) {
-                        model.addAttribute("home", "Could not fetch Contact page..");
+                        model.addAttribute("home", "Could not fetch contact page..");
                 } else {
                         model.addAttribute(HEADER, headerResp);
                         model.addAttribute("data", contactusResp);
@@ -164,7 +164,7 @@ public class GraphqlApp {
                                 ALL_FOOTER, FooterModel.class);
 
                 if (headerResp == null || blogPostResp == null || blogResp == null || footerResp == null) {
-                        model.addAttribute("blog post", "Could not fetch Blog post page..");
+                        model.addAttribute("blog post", "Could not fetch blog post");
                 } else {
                         model.addAttribute(BANNER, "blog");
                         model.addAttribute(HEADER, headerResp);

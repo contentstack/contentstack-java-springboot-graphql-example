@@ -43,7 +43,6 @@ final class GraphqlBuilder {
     }
 
     public static class Builder {
-
         private String tag;
         private String url;
         private JSONObject queryJson = new JSONObject();
@@ -73,12 +72,13 @@ final class GraphqlBuilder {
             return this;
         }
 
-        public Builder setHeader(String accessToken) {
+        public Builder setHeader(String deliveryToken) {
             final HttpHeaders headers = new HttpHeaders();
             ArrayList<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             headers.setAccept(acceptableMediaTypes);
-            headers.add("access_token", accessToken);
+            headers.add("access_token", deliveryToken);
+            // delivery token should be against to the access_token
             this.httpHeaders = headers;
             return this;
         }

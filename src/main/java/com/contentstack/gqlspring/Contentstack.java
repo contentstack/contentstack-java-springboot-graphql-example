@@ -81,7 +81,7 @@ public class Contentstack {
 
     public Object blogPostById(String id, Class<?> cls) {
         try {
-            GraphqlBuilder graphqlBuilderInstance = GraphqlBuilder.Builder.newInstance()
+            GraphqlBuilder builder = GraphqlBuilder.Builder.newInstance()
                     .setTag("all_blog_post")
                     .setUrl(baseURL)
                     .setQueryString("{\n" +
@@ -130,7 +130,11 @@ public class Contentstack {
                             "  }\n" +
                             "}")
                     .setHeader(Dotenv.load().get("_EVV_DELIVERY_TOKEN")).build();
-            JsonNode strResponse = graphqlBuilderInstance.fetch().get("data").get("all_blog_post").get(ITEMS).get(0);
+            JsonNode strResponse = builder.fetch()
+                    .get("data")
+                    .get("all_blog_post")
+                    .get(ITEMS)
+                    .get(0);
             return convertToObject(cls, strResponse.toString());
         } catch (Exception e) {
             logger.fine("Error in blogPostById: " + e.getLocalizedMessage());
