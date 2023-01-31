@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class Util {
 
     private Util() {
-        throw new IllegalStateException("private constructor = not allowed");
+        throw new IllegalStateException("Private constructor = not allowed");
     }
 
     public static String load(@NotNull String filename) {
