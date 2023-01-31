@@ -6,6 +6,7 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.logging.Logger;
 
 public class Util {
 
@@ -18,9 +19,8 @@ public class Util {
             File resource = new ClassPathResource("graphql/" + filename).getFile();
             return new String(Files.readAllBytes(resource.toPath()));
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger("Error in load", e.getLocalizedMessage());
         }
         return null;
     }
 }
-
