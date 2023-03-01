@@ -1,8 +1,10 @@
 package com.contentstack.gqlspring.models;
 
+import com.contentstack.utils.Utils;
+import com.contentstack.utils.render.DefaultOption;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import net.minidev.json.JSONObject;
+import org.json.JSONObject;
 
 @Data
 public class FooterModel {
@@ -14,8 +16,16 @@ public class FooterModel {
     @JsonProperty
     public String title;
     @JsonProperty
-    public JSONObject copyright;
+    public Object copyright;
     @JsonProperty
     public Object social;
 
+
+    public String getHTML() {
+        JSONObject jsonCopyright = new JSONObject(this.copyright);
+        jsonCopyright.put("data", jsonCopyright);
+        String[] path = {"data"};
+        Utils.render(jsonCopyright, path, new DefaultOption());
+        return jsonCopyright.optString("data");
+    }
 }

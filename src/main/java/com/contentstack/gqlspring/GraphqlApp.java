@@ -35,33 +35,18 @@ public class GraphqlApp {
                 Constant.ALL_PAGE, HomeModel.class);
 
         String queryString = Objects.requireNonNull(Util.load(Constant.GL_FOOTER));
+
         Object footerResp = contentstack.getQuery(queryString,
                 Constant.ALL_FOOTER, FooterModel.class);
+        FooterModel modelFooter = (FooterModel) footerResp;
 
-        if (footerResp instanceof FooterModel) {
-//            String[] keyPath = {"json"};
-//            Utils.render(((FooterModel) footerResp).copyright.get(""), keyPath, new Option() {
-//                @Override
-//                public String renderOptions(JSONObject embeddedObject, Metadata metadata) {
-//                    return null;
-//                }
-//
-//                @Override
-//                public String renderMark(MarkType markType, String renderText) {
-//                    return null;
-//                }
-//
-//                @Override
-//                public String renderNode(String nodeType, JSONObject nodeObject, NodeCallback callback) {
-//                    return null;
-//                }
-//            });
-        }
         model.addAttribute(Constant.ABOUT, "home");
         model.addAttribute(Constant.BANNER, "home");
         model.addAttribute(Constant.HEADER, headerResp);
         model.addAttribute(Constant.DATA, homeResp);
-        model.addAttribute(Constant.FOOTER, footerResp);
+        model.addAttribute(Constant.FOOTER, modelFooter);
+        String result = modelFooter.getHTML();
+        System.out.println(result);
         return "index";
     }
 

@@ -55,16 +55,15 @@ public class Contentstack {
                     .setUrl(baseUrl).setQueryString(query)
                     .setHeader(deliveryToken).build();
 
-            if (nodeBy.equalsIgnoreCase("all_footer")){
-                System.out.println("all_footer: "+nodeBy);
-            }
-
             if (cls.isAssignableFrom(BlogListModel[].class) || cls.isAssignableFrom(ArchivedModel[].class)) {
                 JsonNode jsonNode = gqlInstance.fetch().get("data").get(nodeBy).get(ITEMS);
                 return toListObject(cls, jsonNode.toString());
             }
 
             JsonNode jsonNode = gqlInstance.fetch().get("data").get(nodeBy).get(ITEMS).get(0);
+            if (nodeBy.equalsIgnoreCase("all_footer")) {
+                System.out.println("all_footer: " + jsonNode.toString());
+            }
             return convertToObject(cls, jsonNode.toString());
 
         } catch (Exception e) {

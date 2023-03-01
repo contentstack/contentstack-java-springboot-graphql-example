@@ -1,39 +1,39 @@
 <div class="mission-content-section">
 
-  <img class="mission-icon" th:src="#{bucket.icon.url}" alt="art work" />
+    <img class="mission-icon" th:src="#{bucket.icon.url}" alt="art work"/>
 
-  <div class="mission-section-content">
-    <h3 th:text="*{bucket.title_h3}"></h3>
-    <div th:text="*{bucket.description}"></div>
-  </div>
+    <div class="mission-section-content">
+        <h3 th:text="*{bucket.title_h3}"></h3>
+        <div th:text="*{bucket.description}"></div>
+    </div>
 </div>
 <div class="member-main-section" th:fragment="aboutSectionBucket">
-  <div class="member-head">
-    <h2 th:text="*{section_with_buckets.title_h2}"></h2>
-  </div>
-  <div class="mission-section">
+    <div class="member-head">
+        <h2 th:text="*{section_with_buckets.title_h2}"></h2>
+    </div>
+    <div class="mission-section">
 
-    <div class="mission-content-top">
-      <th:block th:each="bucket :${component.section_with_buckets.buckets}">
-        <div class="mission-content-section" th:if="${bucketStat.index} < 2">
-          <img class="mission-icon" th:src="${bucket.iconConnection.edges[0].node.url}" alt="art work" />
-          <div class="mission-section-content">
-            <h3 th:text="${bucket.title_h3}"></h3>
-            <th-block th:utext="${bucket.description}"></th-block>
-          </div>
+        <div class="mission-content-top">
+            <th:block th:each="bucket :${component.section_with_buckets.buckets}">
+                <div class="mission-content-section" th:if="${bucketStat.index} < 2">
+                    <img class="mission-icon" th:src="${bucket.iconConnection.edges[0].node.url}" alt="art work"/>
+                    <div class="mission-section-content">
+                        <h3 th:text="${bucket.title_h3}"></h3>
+                        <th-block th:utext="${bucket.description}"></th-block>
+                    </div>
+                </div>
+            </th:block>
         </div>
-      </th:block>
-    </div>
-    <div class="mission-content-bottom">
-      <th:block th:each="bucket :${component.section_with_buckets.buckets}">
-        <div class="mission-content-section" th:if="${bucketStat.index} >= 2">
-          <img class="mission-icon" th:src="${bucket.iconConnection.edges[0].node.url}" alt="art work" />
-          <div class="mission-section-content">
-            <h3 th:text="${bucket.title_h3}"></h3>
-            <th-block th:utext="${bucket.description}"></th-block>
-          </div>
+        <div class="mission-content-bottom">
+            <th:block th:each="bucket :${component.section_with_buckets.buckets}">
+                <div class="mission-content-section" th:if="${bucketStat.index} >= 2">
+                    <img class="mission-icon" th:src="${bucket.iconConnection.edges[0].node.url}" alt="art work"/>
+                    <div class="mission-section-content">
+                        <h3 th:text="${bucket.title_h3}"></h3>
+                        <th-block th:utext="${bucket.description}"></th-block>
+                    </div>
+                </div>
+            </th:block>
         </div>
-      </th:block>
     </div>
-  </div>
 </div>
