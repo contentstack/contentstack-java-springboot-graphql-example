@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cdimascio.dotenv.Dotenv;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -14,11 +13,12 @@ import java.util.logging.Logger;
 
 public class Contentstack {
 
-    private static Logger logger = Logger.getLogger(Contentstack.class.getSimpleName());
-    private static final String STRING = "}\n";
-    private static String baseURL;
+    private static String baseUrl;
     private static final String ITEMS = "items";
+    private static final Logger logger = Logger.getLogger(Contentstack.class.getSimpleName());
+    private static String deliveryToken;
 
+    // Loads everytime when new instance is created for the Contentstack class
     public Contentstack() {
         loadEnvVar();
     }
@@ -33,12 +33,14 @@ public class Contentstack {
         }
     }
 
+    // Loads credential from .env
     private static void loadEnvVar() {
         Dotenv dotenv = Dotenv.load();
+        deliveryToken = dotenv.get("_EVV_DELIVERY_TOKEN");
         String apiKey = dotenv.get("_ENV_API_KEY");
         String env = dotenv.get("_ENV");
         String host = dotenv.get("_HOST");
-        baseURL = "https://" + host + "/stacks/" + apiKey + "?environment=" + env;
+        baseUrl = "https://" + host + "/stacks/" + apiKey + "?environment=" + env;
     }
 
     public Object getQuery(@NotNull String query, @NotNull String nodeBy, Class<?> cls) {
@@ -48,13 +50,14 @@ public class Contentstack {
                 throw new IllegalArgumentException("Please provide a valid node type");
             }
 
-            String deliverToken = Dotenv.load().get("_EVV_DELIVERY_TOKEN");
             GraphqlBuilder gqlInstance = GraphqlBuilder.Builder.newInstance()
                     .setTag(nodeBy)
-                    .setUrl(baseURL)
-                    .setQueryString(query)
-                    .setHeader(deliverToken)
-                    .build();
+                    .setUrl(baseUrl).setQueryString(query)
+                    .setHeader(deliveryToken).build();
+
+            if (nodeBy.equalsIgnoreCase("all_footer")){
+                System.out.println("all_footer: "+nodeBy);
+            }
 
             if (cls.isAssignableFrom(BlogListModel[].class) || cls.isAssignableFrom(ArchivedModel[].class)) {
                 JsonNode jsonNode = gqlInstance.fetch().get("data").get(nodeBy).get(ITEMS);
@@ -65,25 +68,26 @@ public class Contentstack {
             return convertToObject(cls, jsonNode.toString());
 
         } catch (Exception e) {
-            logger.fine("Error in getQuery: " + e.getLocalizedMessage());
+            e.printStackTrace();
         }
         return null;
     }
 
     private Object toListObject(Class<?> cls, String string) {
         try {
+            // return Arrays.asList(new ObjectMapper().readValue(string, cls)).get(0);
             return Collections.singletonList(new ObjectMapper().readValue(string, cls)).get(0);
         } catch (JsonProcessingException e) {
-            logger.fine("Error in toListObject: " + e.getLocalizedMessage());
+            e.printStackTrace();
         }
         return null;
     }
 
     public Object blogPostById(String id, Class<?> cls) {
         try {
-            GraphqlBuilder builder = GraphqlBuilder.Builder.newInstance()
+            GraphqlBuilder graphqlBuilderInstance = GraphqlBuilder.Builder.newInstance()
                     .setTag("all_blog_post")
-                    .setUrl(baseURL)
+                    .setUrl(baseUrl)
                     .setQueryString("{\n" +
                             "  all_blog_post(where: {url:" + "\"" + id + "\"" + "}) {\n" +
                             "    items {\n" +
@@ -96,7 +100,7 @@ public class Contentstack {
                             "        keywords\n" +
                             "        meta_description\n" +
                             "        meta_title\n" +
-                            "}\n" +
+                            "      }\n" +
                             "      related_postConnection {\n" +
                             "        edges {\n" +
                             "          node {\n" +
@@ -116,7 +120,7 @@ public class Contentstack {
                             "            }\n" +
                             "          }\n" +
                             "        }\n" +
-                            STRING +
+                            "      }\n" +
                             "      authorConnection {\n" +
                             "        edges {\n" +
                             "          node {\n" +
@@ -125,20 +129,17 @@ public class Contentstack {
                             "            }\n" +
                             "          }\n" +
                             "        }\n" +
-                            STRING +
+                            "      }\n" +
                             "    }\n" +
                             "  }\n" +
                             "}")
-                    .setHeader(Dotenv.load().get("_EVV_DELIVERY_TOKEN")).build();
-            JsonNode strResponse = builder.fetch()
-                    .get("data")
-                    .get("all_blog_post")
-                    .get(ITEMS)
-                    .get(0);
+                    .setHeader(deliveryToken).build();
+            JsonNode strResponse = graphqlBuilderInstance.fetch().get("data").get("all_blog_post").get(ITEMS).get(0);
             return convertToObject(cls, strResponse.toString());
         } catch (Exception e) {
-            logger.fine("Error in blogPostById: " + e.getLocalizedMessage());
-            throw new IllegalArgumentException("Invalid = graphql query");
+            logger.warning(e.getMessage());
+            e.printStackTrace();
+            return null;
         }
     }
 

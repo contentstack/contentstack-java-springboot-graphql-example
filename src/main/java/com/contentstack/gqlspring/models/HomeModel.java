@@ -11,6 +11,6 @@ public class HomeModel {
     public String url;
     @JsonProperty
     public Object seo;
-    @JsonProperty("page_components")
-    public Object pageComponents;
+    @JsonProperty
+    public Object page_components;
 }

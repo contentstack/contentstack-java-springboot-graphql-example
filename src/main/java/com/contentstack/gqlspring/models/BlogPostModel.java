@@ -18,9 +18,9 @@ public class BlogPostModel {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     public Date date;
     @JsonProperty
-    public String body;
+    public Object body;
     @JsonProperty
     public Object authorConnection;
-    @JsonProperty("related_postConnection")
-    public Object relatedPostConnection;
+    @JsonProperty
+    public Object related_postConnection;
 }

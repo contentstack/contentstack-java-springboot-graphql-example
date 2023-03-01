@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <th:block th:each="key:${data.seo}">
+      <th:block
+        th:if="${#strings.arraySplit(key,'=')[0]}!= enable_search_indexing"
+      >
+        <meta
+          th:if="${#strings.contains(key,'meta_')}"
+          th:with="name=${(#strings.arraySplit(key,'=')[0])}"
+          th:name="${#strings.arraySplit(name,'_')[1]}"
+          th:content="${#strings.arraySplit(key,'=')[1]}"
+        />
+        <meta
+          th:unless="${#strings.contains(key,'meta_')}"
+          th:name="${#strings.arraySplit(key,'=')[0]}"
+          th:content="${#strings.arraySplit(key,'=')[1]}"
+        />
+      </th:block>
+    </th:block>
+    <link href="styles/third-party.css" rel="stylesheet" />
+    <link href="styles/style.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Inter&amp;display=swap"
+      rel="stylesheet"
+    />
+    <title th:text="${data.title}+ ' Page'"></title>
+  </head>
+
+  <body>
+    <div lang="en" th:replace="components/header :: header"></div>
+    <main class="mainClass">
+      <div
+        lang="en"
+        th:replace="components/render-components :: renderComponents"
+      ></div>
+      <th:block
+        lang="en"
+        th:replace="components/blog-list :: blogList"
+      ></th:block>
+    </main>
+    <div lang="en" th:replace="components/footer :: footer"></div>
+  </body>
+</html>

@@ -2,6 +2,7 @@ package com.contentstack.gqlspring.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import net.minidev.json.JSONObject;
 
 @Data
 public class FooterModel {
@@ -13,7 +14,7 @@ public class FooterModel {
     @JsonProperty
     public String title;
     @JsonProperty
-    public String copyright;
+    public JSONObject copyright;
     @JsonProperty
     public Object social;
 

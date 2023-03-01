@@ -1,0 +1,28 @@
+<div class="home-advisor-section" th:fragment="section">
+  <th:block th:if="*{section.image_alignment}=='Left'">
+    <img
+    th:src="*{section.imageConnection.edges[0].node.url}"
+    alt="section image"
+  />
+    <div class="home-content">
+      <h2 th:text="*{section.title_h2}"></h2>
+      <p th:text="*{section.description}"></p>
+      <a th:href="*{section.call_to_action.href}" class="btn secondary-btn"
+        th:text="*{section.call_to_action.title}">
+      </a>
+    </div>
+  </th:block>
+  <th:block th:if="*{section.image_alignment}=='Right'">
+    <div class="home-content">
+      <h2 th:text="*{section.title_h2}"></h2>
+      <p th:text="*{section.description}"></p>
+      <a th:href="*{section.call_to_action.href}" class="btn secondary-btn"
+        th:text="${component.section.call_to_action.title}">
+      </a>
+    </div>
+    <img
+    th:src="*{section.imageConnection.edges[0].node.url}"
+    alt="section image"
+  />
+  </th:block>
+</div>

@@ -7,6 +7,6 @@ import lombok.Data;
 public class CustomBlogModel {
     @JsonProperty
     public String title;
-    @JsonProperty("page_components")
-    public Object pageComponents;
+    @JsonProperty
+    public Object page_components;
 }

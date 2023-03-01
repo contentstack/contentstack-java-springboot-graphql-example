@@ -1,0 +1,38 @@
+{
+    all_footer {
+        items {
+            copyright {
+                json
+            }
+            title
+            social {
+                social_share {
+                    link {
+                        title
+                        href
+                    }
+                    iconConnection {
+                        edges {
+                            node {
+                                url
+                            }
+                        }
+                    }
+                }
+            }
+            navigation {
+                link {
+                    title
+                    href
+                }
+            }
+            logoConnection {
+                edges {
+                    node {
+                        url
+                    }
+                }
+            }
+        }
+    }
+}

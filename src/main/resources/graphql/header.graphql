@@ -1,0 +1,33 @@
+{
+  all_header {
+    items {
+      title
+      navigation_menu {
+        label
+        page_referenceConnection {
+          edges {
+            node {
+              ... on Page {
+                title
+                url
+              }
+            }
+          }
+        }
+      }
+      logoConnection {
+        edges {
+          node {
+            url
+          }
+        }
+      }
+      notification_bar {
+        show_announcement
+        announcement_text {
+          json
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+    all_blog_post(where: {is_archived: false}) {
+        items {
+            title
+            url
+            body {
+                json
+            }
+            date
+            authorConnection {
+                edges {
+                    node {
+                        ... on Author {
+                            title
+                        }
+                    }
+                }
+            }
+            featured_imageConnection {
+                edges {
+                    node {
+                        url
+                    }
+                }
+            }
+        }
+    }
+}
