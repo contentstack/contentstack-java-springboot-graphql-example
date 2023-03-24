@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Objects;
-
 @SpringBootApplication
 @Controller
 @Validated
 public class GraphqlApp {
 
     private static Contentstack contentstack;
+    private static final Logger LOGGER = Logger.getLogger(GraphqlApp.class.getName());
+
 
     public static void main(String[] args) {
         contentstack = new Contentstack();
@@ -46,7 +46,7 @@ public class GraphqlApp {
         model.addAttribute(Constant.DATA, homeResp);
         model.addAttribute(Constant.FOOTER, modelFooter);
         String result = modelFooter.getHTML();
-        System.out.println(result);
+        LOGGER.log(Level.INFO, result);
         return "index";
     }
 

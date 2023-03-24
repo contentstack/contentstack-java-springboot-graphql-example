@@ -74,12 +74,10 @@ final class GraphqlBuilder {
         }
 
         public Builder setHeader(String accessToken) {
-            //final HttpHeaders headers = new HttpHeaders();
             ArrayList<MediaType> acceptableMediaTypes = new ArrayList<>();
             acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
             this.headers.setAccept(acceptableMediaTypes);
             this.headers.add("access_token", accessToken);
-            //this.headers = headers;
             return this;
         }
 

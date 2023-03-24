@@ -9,17 +9,20 @@ import io.github.cdimascio.dotenv.Dotenv;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Contentstack {
 
+    private static final Logger LOGGER = Logger.getLogger(Contentstack.class.getName());
     private static String baseUrl;
     private static final String ITEMS = "items";
-    private static final Logger logger = Logger.getLogger(Contentstack.class.getSimpleName());
     private static String deliveryToken;
 
     // Loads everytime when new instance is created for the Contentstack class
     public Contentstack() {
+        LOGGER.setLevel(Level.WARNING);
+
         loadEnvVar();
     }
 
@@ -28,7 +31,7 @@ public class Contentstack {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.readValue(jsonString, clazz);
         } catch (Exception e) {
-            logger.fine("Error in convertToObject: " + e.getLocalizedMessage());
+            LOGGER.log(Level.INFO, e.getLocalizedMessage());
             return null;
         }
     }
@@ -62,22 +65,21 @@ public class Contentstack {
 
             JsonNode jsonNode = gqlInstance.fetch().get("data").get(nodeBy).get(ITEMS).get(0);
             if (nodeBy.equalsIgnoreCase("all_footer")) {
-                System.out.println("all_footer: " + jsonNode.toString());
+                LOGGER.log(Level.INFO, jsonNode.toString());
             }
             return convertToObject(cls, jsonNode.toString());
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.INFO, e.getLocalizedMessage());
         }
         return null;
     }
 
     private Object toListObject(Class<?> cls, String string) {
         try {
-            // return Arrays.asList(new ObjectMapper().readValue(string, cls)).get(0);
             return Collections.singletonList(new ObjectMapper().readValue(string, cls)).get(0);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.INFO, e.getLocalizedMessage());
         }
         return null;
     }
@@ -136,8 +138,7 @@ public class Contentstack {
             JsonNode strResponse = graphqlBuilderInstance.fetch().get("data").get("all_blog_post").get(ITEMS).get(0);
             return convertToObject(cls, strResponse.toString());
         } catch (Exception e) {
-            logger.warning(e.getMessage());
-            e.printStackTrace();
+            LOGGER.log(Level.INFO, e.getLocalizedMessage());
             return null;
         }
     }
