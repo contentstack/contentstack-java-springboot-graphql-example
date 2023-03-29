@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Objects;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @SpringBootApplication
@@ -21,14 +20,14 @@ public class GraphqlApp {
 
     private static Contentstack contentstack;
     private static final Logger LOGGER = Logger.getLogger(GraphqlApp.class.getName());
-
+    private String copyrightMessage = "Copyright © 2022. LogoIpsum. All rights reserved.";
 
     public static void main(String[] args) {
         contentstack = new Contentstack();
         SpringApplication.run(GraphqlApp.class, args);
     }
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String loadHomePage(Model model) {
         String headerQuery = Objects.requireNonNull(Util.load(Constant.GL_HEADER));
         Object headerResp = contentstack.getQuery(headerQuery,
@@ -38,19 +37,20 @@ public class GraphqlApp {
         Object homeResp = contentstack.getQuery(homeQueryString,
                 Constant.ALL_PAGE, HomeModel.class);
 
-        String queryString = Objects.requireNonNull(Util.load(Constant.GL_FOOTER));
-
-        Object footerResp = contentstack.getQuery(queryString,
-                Constant.ALL_FOOTER, FooterModel.class);
-        FooterModel modelFooter = (FooterModel) footerResp;
+//       String queryString = Objects.requireNonNull(Util.load(Constant.GL_FOOTER));
+//
+//        Object footerResp = contentstack.getQuery(queryString,
+//                Constant.ALL_FOOTER, FooterModel.class);
+//        FooterModel modelFooter = (FooterModel) footerResp;
 
         model.addAttribute(Constant.ABOUT, "home");
         model.addAttribute(Constant.BANNER, "home");
         model.addAttribute(Constant.HEADER, headerResp);
         model.addAttribute(Constant.DATA, homeResp);
-        model.addAttribute(Constant.FOOTER, modelFooter);
-        String result = modelFooter.getHTML();
-        LOGGER.log(Level.INFO, result);
+        // TODO: Get Copyright here
+        model.addAttribute(Constant.FOOTER, copyrightMessage);
+        // String result = modelFooter.getHTML();
+        //LOGGER.log(Level.INFO, modelFooter.copyright.toString());
         return "index";
     }
 
@@ -67,7 +67,7 @@ public class GraphqlApp {
                 Constant.ALL_PAGE, HomeModel.class);
 
         String queryString = Objects.requireNonNull(Util.load(Constant.GL_FOOTER));
-        Object footerResp = contentstack.getQuery(queryString,
+        FooterModel footerResp = (FooterModel) contentstack.getQuery(queryString,
                 Constant.ALL_FOOTER, FooterModel.class);
 
         if (headerResp == null || aboutResp == null || footerResp == null) {
@@ -77,7 +77,9 @@ public class GraphqlApp {
             model.addAttribute(Constant.BANNER, "home");
             model.addAttribute(Constant.HEADER, headerResp);
             model.addAttribute(Constant.DATA, aboutResp);
-            model.addAttribute(Constant.FOOTER, footerResp);
+            // TODO: put private message here
+            model.addAttribute(Constant.FOOTER, copyrightMessage);
+
         }
         return "about-us";
     }
@@ -102,7 +104,7 @@ public class GraphqlApp {
                 Constant.ALL_BLOG_POST, BlogListModel[].class);
 
         String queryString = Objects.requireNonNull(Util.load(Constant.GL_FOOTER));
-        Object footerResp = contentstack.getQuery(queryString,
+        FooterModel footerResp = (FooterModel) contentstack.getQuery(queryString,
                 Constant.ALL_FOOTER, FooterModel.class);
 
         if (headerResp == null || blogResp == null || archivedBlogsResp == null || allBlogListResp == null
@@ -114,7 +116,9 @@ public class GraphqlApp {
             model.addAttribute(Constant.DATA, blogResp);
             model.addAttribute(Constant.ARCHIVED, archivedBlogsResp);
             model.addAttribute(Constant.BLOG_LIST, allBlogListResp);
-            model.addAttribute(Constant.FOOTER, footerResp);
+            //TODO: Put copyright message here
+            model.addAttribute(Constant.FOOTER, copyrightMessage);
+
         }
         return "blog";
     }
@@ -130,18 +134,16 @@ public class GraphqlApp {
         Object contactusResp = contentstack.getQuery(contactusQuery,
                 Constant.ALL_PAGE, ContactModel.class);
 
-        String queryString = Objects.requireNonNull(Util.load(Constant.ALL_FOOTER));
-        Object footerResp = contentstack.getQuery(queryString,
-                Constant.ALL_FOOTER, FooterModel.class);
+        //       String queryString = Objects.requireNonNull(Util.load(Constant.ALL_FOOTER));
+//        FooterModel footerResp = (FooterModel) contentstack.getQuery(queryString,
+//                Constant.ALL_FOOTER, FooterModel.class);
 
-        if (headerResp == null || footerResp == null || contactusResp == null) {
-            model.addAttribute(Constant.HOME, "Could not fetch Contact page..");
-        } else {
-            model.addAttribute(Constant.HEADER, headerResp);
-            model.addAttribute(Constant.DATA, contactusResp);
-            model.addAttribute(Constant.FOOTER, footerResp);
 
-        }
+        model.addAttribute(Constant.HEADER, headerResp);
+        model.addAttribute(Constant.DATA, contactusResp);
+        //TODO: Put copyright message here
+        model.addAttribute(Constant.FOOTER, copyrightMessage);
+
         return "contact-us";
     }
 
@@ -159,7 +161,7 @@ public class GraphqlApp {
                 Constant.ALL_PAGE, CustomBlogModel.class);
 
         String queryString = Objects.requireNonNull(Util.load(Constant.ALL_FOOTER));
-        Object footerResp = contentstack.getQuery(queryString,
+        FooterModel footerResp = (FooterModel) contentstack.getQuery(queryString,
                 Constant.ALL_FOOTER, FooterModel.class);
 
         if (headerResp == null || blogPostResp == null || blogResp == null || footerResp == null) {
@@ -169,9 +171,18 @@ public class GraphqlApp {
             model.addAttribute(Constant.HEADER, headerResp);
             model.addAttribute(Constant.BLOGPOST, blogPostResp);
             model.addAttribute(Constant.DATA, blogResp);
-            model.addAttribute(Constant.FOOTER, footerResp);
+            //TODO: put copyright message
+            model.addAttribute(Constant.FOOTER, copyrightMessage);
         }
         return "blog-post";
     }
+
+
+//    private FooterModel getCopyrightMsg(FooterModel footerResp){
+//        if (((LinkedHashMap<?, ?>) footerResp.copyright).containsKey("json")) {
+//            footerResp.copyright = ((LinkedHashMap<?, ?>) footerResp.copyright).get("json");
+//        }
+//        return footerResp;
+//    }
 
 }
