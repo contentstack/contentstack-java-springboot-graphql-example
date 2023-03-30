@@ -22,7 +22,6 @@ public class Contentstack {
     // Loads everytime when new instance is created for the Contentstack class
     public Contentstack() {
         LOGGER.setLevel(Level.WARNING);
-
         loadEnvVar();
     }
 
@@ -84,6 +83,13 @@ public class Contentstack {
         return null;
     }
 
+    /**
+     * The function is used to provide post by id data class
+     * 
+     * @param id  takes id of the post
+     * @param cls the Model class T in which it need to be converted
+     * @return Object the T obejct
+     */
     public Object blogPostById(String id, Class<?> cls) {
         try {
             GraphqlBuilder graphqlBuilderInstance = GraphqlBuilder.Builder.newInstance()
