@@ -11,7 +11,7 @@ This step-by-step guide details how to create a Java sample webapp via spring-bo
 
 -   An IDE, for example, [IntelliJ IDEA](https://www.jetbrains.com/idea/download/) / [STS](https://spring.io/tools) / [VSCode](https://code.visualstudio.com/download) / [Ecllipse](https://www.eclipse.org/downloads/)
 
--   [JDK 1.8 or later](https://www.oracle.com/in/java/technologies/javase/javase-jdk8-downloads.html)
+-   [JDK 17 or later](https://www.oracle.com/in/java/technologies/downloads/#java17)
 
 -   Gradle 4+ or Maven 3.2+
 
