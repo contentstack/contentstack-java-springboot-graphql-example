@@ -5,10 +5,13 @@ import com.contentstack.gqlspring.models.BlogListModel;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.github.cdimascio.dotenv.Dotenv;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
+import java.util.logging.Logger;
 
 public class Contentstack {
 
@@ -26,7 +29,7 @@ public class Contentstack {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.readValue(jsonString, clazz);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.getLogger(Contentstack.class.getName()).severe(e.getMessage());
             return null;
         }
     }
@@ -63,7 +66,7 @@ public class Contentstack {
             return convertToObject(cls, jsonNode.toString());
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.getLogger(Contentstack.class.getName()).severe(e.getMessage());
         }
         return null;
     }
@@ -73,7 +76,7 @@ public class Contentstack {
         try {
             return Collections.singletonList(new ObjectMapper().readValue(string, cls)).get(0);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            Logger.getLogger(Contentstack.class.getName()).severe(e.getMessage());
         }
         return null;
     }
@@ -132,7 +135,7 @@ public class Contentstack {
             JsonNode strResponse = graphqlBuilderInstance.fetch().get("data").get("all_blog_post").get(ITEMS).get(0);
             return convertToObject(cls, strResponse.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.getLogger(Contentstack.class.getName()).severe(e.getMessage());
             throw new IllegalArgumentException("Invalid = graphql query");
         }
     }
