@@ -75,7 +75,7 @@ public class GraphqlApp {
                 ALL_FOOTER, FooterModel.class);
 
 
-        if (headerResp == null | aboutResp == null | footerResp == null) {
+        if (headerResp == null || aboutResp == null || footerResp == null) {
             model.addAttribute("home", "Could not fetch About page..");
         } else {
             model.addAttribute(ABOUT, ABOUT);
@@ -112,7 +112,7 @@ public class GraphqlApp {
                 ALL_FOOTER, FooterModel.class);
 
 
-        if (headerResp == null | blogResp == null | archivedBlogsResp == null | allBlogListResp == null | footerResp == null) {
+        if (headerResp == null || blogResp == null || archivedBlogsResp == null || allBlogListResp == null || footerResp == null) {
             model.addAttribute("home", "Could not fetch Blog page..");
         } else {
             model.addAttribute(BANNER, "blog");
@@ -141,7 +141,7 @@ public class GraphqlApp {
         Object footerResp = contentstack.getQuery(queryString,
                 ALL_FOOTER, FooterModel.class);
 
-        if (headerResp == null | footerResp == null | contactusResp == null) {
+        if (headerResp == null || footerResp == null || contactusResp == null) {
             model.addAttribute("home", "Could not fetch Contact page..");
         } else {
             model.addAttribute(HEADER, headerResp);
@@ -170,7 +170,7 @@ public class GraphqlApp {
         Object footerResp = contentstack.getQuery(queryString,
                 ALL_FOOTER, FooterModel.class);
 
-        if (headerResp == null | blogPostResp == null | blogResp == null | footerResp == null) {
+        if (headerResp == null || blogPostResp == null || blogResp == null || footerResp == null) {
             model.addAttribute("blog post", "Could not fetch Blog post page..");
         } else {
             model.addAttribute(BANNER, "blog");
