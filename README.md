@@ -1,5 +1,8 @@
 [![Contentstack](https://www.contentstack.com/docs/static/images/contentstack.png)](https://www.contentstack.com/)
 
+[!WARNING]
+**This repo is deprecated and no longer maintained. Security updates are not supported. We recommend avoiding its use.**
+
 **Note:** This app is no longer maintained. It remains available for reference. If you have questions regarding this, please reach out to our [support team](mailto:support@contentstack.com) and we will do our best to help!
 
 ## Graphql-spring-boot-client example application
